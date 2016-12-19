@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:text="@string/selectClass_text"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectClass_text"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/shaman"
+        android:id="@+id/shaman_button"
+        android:layout_below="@+id/warrior_button"
+        android:layout_alignLeft="@+id/warrior_button"
+        android:layout_alignStart="@+id/warrior_button"
+        android:layout_marginTop="28dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/warlock"
+        android:id="@+id/warlock_button"
+        android:layout_alignTop="@+id/druid_button"
+        android:layout_alignLeft="@+id/paladin_button"
+        android:layout_alignStart="@+id/paladin_button" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/warrior"
+        android:id="@+id/warrior_button"
+        android:layout_alignTop="@+id/druid_button"
+        android:layout_alignLeft="@+id/mage_button"
+        android:layout_alignStart="@+id/mage_button" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/paladin"
+        android:id="@+id/paladin_button"
+        android:layout_alignTop="@+id/hunter_button"
+        android:layout_alignRight="@+id/selectClass_text"
+        android:layout_alignEnd="@+id/selectClass_text" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/hunter"
+        android:id="@+id/hunter_button"
+        android:layout_alignTop="@+id/mage_button"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/druid"
+        android:layout_marginTop="33dp"
+        android:id="@+id/druid_button"
+        android:layout_below="@+id/hunter_button"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:id="@+id/mage_button"
+        app:srcCompat="@mipmap/mage"
+        android:layout_below="@+id/selectClass_text"
+        android:layout_alignLeft="@+id/selectClass_text"
+        android:layout_alignStart="@+id/selectClass_text" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/priest"
+        android:id="@+id/priest_button"
+        android:layout_alignTop="@+id/shaman_button"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/rogue"
+        android:layout_alignTop="@+id/priest_button"
+        android:layout_alignLeft="@+id/warlock_button"
+        android:layout_alignStart="@+id/warlock_button"
+        android:id="@+id/rogue_button" />
+
+</RelativeLayout>

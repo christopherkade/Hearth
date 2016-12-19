@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="@string/general_menu_title">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_home"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/homeTab" />
+
+                <item
+                    android:id="@+id/nav_searchCard"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/searchTab" />
+
+                <item
+                    android:id="@+id/nav_cardDisplayer"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/cardDisplayerTab" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/statistics_menu_title">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_stat_general"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/statisticsGeneralTab">
+                </item>
+                <item
+                    android:id="@+id/nav_stat_deck"
+                    android:icon="@mipmap/ic_launcher"
+                    android:title="@string/statisticsDeckTab">
+                </item>
+            </group>
+        </menu>
+    </item>
+
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/homeTab" />
-
-        <item
-            android:id="@+id/nav_searchCard"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/searchTab" />
-
-        <item
-            android:id="@+id/nav_cardDisplayer"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/cardDisplayerTab" />
-
         <item
             android:id="@+id/nav_about"
             android:icon="@mipmap/ic_launcher"
             android:title="@string/aboutTab" />
     </group>
-
 
 </menu>

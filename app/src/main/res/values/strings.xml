@@ -6,9 +6,6 @@
     <string name="WelcomeMessage" />
     <string name="searchField_text">Card name</string>
     <string name="search_button">Search</string>
-    <string name="homeTab">Home</string>
-    <string name="searchTab">Search Card</string>
-    <string name="cardDisplayerTab">Card Displayer</string>
     <string name="type_text">Type</string>
     <string name="card_not_found_text">Card Not Found</string>
     <string name="cost_text">Cost</string>
@@ -16,11 +13,26 @@
     <string name="xpac_text">Current expansion</string>
     <string name="patch_text">Current patch</string>
     <string name="welcome_text2">Hearthstone Information Kit</string>
-    <string name="aboutTab">About</string>
     <string name="developedBy_text">Developed By</string>
     <string name="developerName_text">Christopher Kadé</string>
     <string name="email_text">E-mail</string>
     <string name="email_value">c.kade96@gmail.com</string>
+
+    <!-- Tab name strings -->
+    <string name="homeTab">Home</string>
+    <string name="cardDisplayerTab">Card Displayer</string>
+    <string name="searchTab">Search Card</string>
+    <string name="statisticsTab">Statistics</string>
+    <string name="statisticsGeneralTab">General Stats</string>
+    <string name="statisticsDeckTab">Deck Stats</string>
+    <string name="aboutTab">About</string>
+    <string name="statistics_menu_title">Statistics</string>
+    <string name="general_menu_title">General</string>
+    <string name="myDecks_text">My Decks</string>
+    <string name="newDeck_button">+</string>
+    <string name="selectClass_text">Select a class</string>
+    <string name="selectName_text">Select a name</string>
+    <string name="deleteDeck_button">-</string>
 
     <string-array name="type_array">
         <item>None</item>

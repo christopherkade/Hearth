@@ -1,8 +1,5 @@
 package com.example.kade_c.hearth;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +20,8 @@ public class MainActivity extends AppCompatActivity
     Fragment home;
     Fragment searchCard;
     Fragment cardDisplayer;
+    Fragment statistics_general;
+    Fragment statistics_deck;
     Fragment about;
 
     /**
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         connectionHandler.checkConnection();
 
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        displaySelectedScreen(R.id. nav_home);
+        displaySelectedScreen(R.id.nav_home);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         switch (itemId) {
-            // If user selected 'Home'
+            // HOME
             case R.id.nav_home:
                 if (home == null) {
                     fragment = new Home();
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity
                 } else
                     fragment = home;
                 break;
-            // If user selected 'Search Card'
+            // SEARCH CARD
             case R.id.nav_searchCard:
                 if (searchCard == null) {
                     fragment = new SearchCard();
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 } else
                     fragment = searchCard;
                 break;
-            // ...
+            // CARD DISPLAYER
             case R.id.nav_cardDisplayer:
                 if (cardDisplayer == null) {
                     fragment = new CardDisplayer();
@@ -106,6 +105,23 @@ public class MainActivity extends AppCompatActivity
                 } else
                     fragment = cardDisplayer;
                 break;
+            // STATS GENERAL
+            case R.id.nav_stat_general:
+                if (statistics_general == null) {
+                    fragment = new GeneralStatistics();
+                    statistics_general = fragment;
+                } else
+                    fragment = statistics_general;
+                break;
+            // STATS DECK
+            case R.id.nav_stat_deck:
+                if (statistics_deck == null) {
+                    fragment = new DeckStatistics();
+                    statistics_deck = fragment;
+                } else
+                    fragment = statistics_deck;
+                break;
+            // ABOUT
             case R.id.nav_about:
                 if (about == null) {
                     fragment = new About();
