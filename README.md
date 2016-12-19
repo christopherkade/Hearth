@@ -6,3 +6,5 @@ This app offers the following features:
 - Class specific card searching
 
 Developed using the Hearthstone API (http://hearthstoneapi.com/).
+
+![Screenshot](http://imgur.com/a/LRbn6)
