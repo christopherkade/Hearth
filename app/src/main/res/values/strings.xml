@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Hearth</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="WelcomeMessage" />
+    <string name="searchField_text">Card name</string>
+    <string name="search_button">Search</string>
+    <string name="homeTab">Home</string>
+    <string name="searchTab">Search Card</string>
+    <string name="cardDisplayerTab">Card Displayer</string>
+    <string name="type_text">Type</string>
+    <string name="card_not_found_text">Card Not Found</string>
+    <string name="cost_text">Cost</string>
+    <string name="welcome_text">Welcome to Hearth !</string>
+    <string name="xpac_text">Current expansion</string>
+    <string name="patch_text">Current patch</string>
+    <string name="welcome_text2">Hearthstone Information Kit</string>
+    <string name="aboutTab">About</string>
+    <string name="developedBy_text">Developed By</string>
+    <string name="developerName_text">Christopher Kadé</string>
+    <string name="email_text">E-mail</string>
+    <string name="email_value">c.kade96@gmail.com</string>
+
+    <string-array name="type_array">
+        <item>None</item>
+        <item>Common</item>
+        <item>Mage</item>
+        <item>Hunter</item>
+        <item>Paladin</item>
+        <item>Warrior</item>
+        <item>Druid</item>
+        <item>Warlock</item>
+        <item>Shaman</item>
+        <item>Priest</item>
+        <item>Rogue</item>
+    </string-array>
+
+    <string-array name="cost_array">
+        <item>All</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>12</item>
+    </string-array>
+</resources>

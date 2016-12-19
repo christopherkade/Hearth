@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/homeTab" />
+
+        <item
+            android:id="@+id/nav_searchCard"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/searchTab" />
+
+        <item
+            android:id="@+id/nav_cardDisplayer"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/cardDisplayerTab" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/aboutTab" />
+    </group>
+
+
+</menu>
