@@ -33,6 +33,18 @@
     <string name="selectClass_text">Select a class</string>
     <string name="selectName_text">Select a name</string>
     <string name="deleteDeck_button">-</string>
+    <string name="deckName_hint">e.g: Aggro</string>
+    <string name="deckName_button">Create</string>
+    <string name="default_deckName">Unknown</string>
+    <string name="add_victory_button">Add Victory</string>
+    <string name="add_defeat_button">Add Defeat</string>
+    <string name="victory_text">Victory percentage</string>
+    <string name="default_victory_percentage">0%</string>
+    <string name="victory_class_select_text">Won against...</string>
+    <string name="defeat_class_select_text">Lost against...</string>
+    <string name="total_games_text">games played</string>
+    <string name="games_won_text">won</string>
+    <string name="game_lost_text">lost</string>
 
     <string-array name="type_array">
         <item>None</item>

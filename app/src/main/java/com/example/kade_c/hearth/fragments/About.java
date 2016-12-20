@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.example.kade_c.hearth.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.kade_c.hearth.R;
 
 /**
  * Handles the About tab that displays information about me.

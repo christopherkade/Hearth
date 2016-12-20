@@ -1,31 +1,44 @@
-package com.example.kade_c.hearth;
+package com.example.kade_c.hearth.fragments.statistics_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.example.kade_c.hearth.MainActivity;
+import com.example.kade_c.hearth.R;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * Handles the name inputting on deck creation.
+ * Lets the user input a name for their deck and creates deck file.
+ */
 public class DeckCreationName extends Fragment {
+
     View view;
 
     String FILENAME = "Deck_Info";
+
+    // Name inputted.
     String name;
+
+    // Class selected in the previous Fragment.
     String classSelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.deck_creation_name, container, false);
         classSelected = getArguments().getString("classSelected");
+
+        setClassImage();
 
         final Button validateButton = (Button) view.findViewById(R.id.validate_name_button);
         validateButton.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +59,7 @@ public class DeckCreationName extends Fragment {
                 callDeckFragment();
             }
         });
+
         return view;
     }
 
@@ -53,6 +67,17 @@ public class DeckCreationName extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Deck Creation - Name");
+    }
+
+    /**
+     * Sets the class icon image for the Name selection Fragment.
+     */
+    public void setClassImage() {
+        ImageView img = (ImageView) view.findViewById(R.id.deckName_classImage);
+        String classMin = classSelected.toLowerCase();
+
+        int resourceId = getActivity().getResources().getIdentifier(classMin, "mipmap", getActivity().getPackageName());
+        img.setImageResource(resourceId);
     }
 
     /**
@@ -72,21 +97,15 @@ public class DeckCreationName extends Fragment {
         }
     }
 
+    /**
+     * After inputting a name, we go back to our Deck Statistics fragment.
+     */
     public void callDeckFragment() {
-        // Call back Deck stat fragment
-        Fragment fragment = new DeckStatistics();
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Set argument
-        Bundle args = new Bundle();
-        args.putString("classSelected", classSelected);
-        args.putString("name", name);
-        fragment.setArguments(args);
-
-        fragmentTransaction.replace(R.id.content_frame, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        final Fragment homeFragment = new DeckStatistics();
+        final Bundle bundle = new Bundle();
+        bundle.putString("classSelected", classSelected);
+        bundle.putString("name", name);
+        homeFragment.setArguments(bundle);
+        ((MainActivity)getActivity()).addFragment(homeFragment);
     }
 }

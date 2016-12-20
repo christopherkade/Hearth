@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.example.kade_c.hearth.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.kade_c.hearth.APIRequests;
+import com.example.kade_c.hearth.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,7 +138,9 @@ public class CardDisplayer extends Fragment {
             SearchClassCard searchClassCard = new SearchClassCard(selectedType);
 
             // Retrieve URL for the right class.
-            String currentImageURL = searchClassCard.execute(firstTime, currentPage, cost).get();
+            String currentImageURL;
+
+            currentImageURL = searchClassCard.execute(firstTime, currentPage, cost).get();
 
             // Use Glide to load and display image.
             Glide.with(getContext()).load(currentImageURL)
@@ -303,7 +308,7 @@ public class CardDisplayer extends Fragment {
                     String currentImageURL = null;
                     currentPage = 0;
 
-                    // Request a JSONArray containing the cards of classSelected.
+                    // Request a JSONArray containing the cards of wonAgainst.
                     cardsArray = apiRequests.getClassCards(this.classSelected, param[2]);
 
                     if (cardsArray == null) {
@@ -322,6 +327,7 @@ public class CardDisplayer extends Fragment {
                     if (cardsArray == null) {
                         return null;
                     }
+
                     JSONObject card = (JSONObject) cardsArray.get(param[1]);
 
                     return (String) card.get("img");

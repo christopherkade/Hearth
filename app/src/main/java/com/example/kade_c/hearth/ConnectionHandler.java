@@ -11,6 +11,7 @@ import com.novoda.merlin.registerable.disconnection.Disconnectable;
  * Handles connections via Merlin.
  */
 class ConnectionHandler {
+
     private Merlin merlin;
     private Context context;
     private AlertDialog alertDialog;

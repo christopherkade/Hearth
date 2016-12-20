@@ -11,18 +11,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.example.kade_c.hearth.fragments.About;
+import com.example.kade_c.hearth.fragments.CardDisplayer;
+import com.example.kade_c.hearth.fragments.statistics_fragments.DeckStatistics;
+import com.example.kade_c.hearth.fragments.statistics_fragments.GeneralStatistics;
+import com.example.kade_c.hearth.fragments.Home;
+import com.example.kade_c.hearth.fragments.SearchCard;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DrawerLocker.DrawerLockerItf {
 
+    // Merlin class that handles internet monitoring.
     ConnectionHandler connectionHandler;
 
-    Fragment home;
-    Fragment searchCard;
-    Fragment cardDisplayer;
-    Fragment statistics_general;
-    Fragment statistics_deck;
-    Fragment about;
+    // Our Navigation Drawer.
+    DrawerLayout drawer;
+
+    // Our toggler for the Navigation Drawer.
+    ActionBarDrawerToggle toggle;
 
     /**
      * Entry point to our application.
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Handles internet availability checking
         connectionHandler = new ConnectionHandler(this);
         connectionHandler.checkConnection();
 
@@ -41,9 +48,9 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Sets up the Navigation Drawer
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        // Sets up the Navigation Drawer.
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -52,16 +59,21 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
+        // Display home Fragment.
         displaySelectedScreen(R.id.nav_home);
     }
 
+    /**
+     * Deactivated 'back' button press when drawer is closed.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            // Uncomment for 'back' button normal functionality.
+            // super.onBackPressed();
         }
     }
 
@@ -72,8 +84,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Checks if our Fragment is called for the first time,
-     * if so, it instantiated it, if not, we save its previous state in order to use it.
+     * Checks which item has been selected and instantiates the corresponding Fragment.
      * @param itemId id of the item selected.
      * @return the fragment to be displayed.
      */
@@ -83,51 +94,27 @@ public class MainActivity extends AppCompatActivity
         switch (itemId) {
             // HOME
             case R.id.nav_home:
-                if (home == null) {
-                    fragment = new Home();
-                    home = fragment;
-                } else
-                    fragment = home;
+                fragment = new Home();
                 break;
             // SEARCH CARD
             case R.id.nav_searchCard:
-                if (searchCard == null) {
-                    fragment = new SearchCard();
-                    searchCard = fragment;
-                } else
-                    fragment = searchCard;
+                fragment = new SearchCard();
                 break;
             // CARD DISPLAYER
             case R.id.nav_cardDisplayer:
-                if (cardDisplayer == null) {
-                    fragment = new CardDisplayer();
-                    cardDisplayer = fragment;
-                } else
-                    fragment = cardDisplayer;
+                fragment = new CardDisplayer();
                 break;
             // STATS GENERAL
             case R.id.nav_stat_general:
-                if (statistics_general == null) {
-                    fragment = new GeneralStatistics();
-                    statistics_general = fragment;
-                } else
-                    fragment = statistics_general;
+                fragment = new GeneralStatistics();
                 break;
             // STATS DECK
             case R.id.nav_stat_deck:
-                if (statistics_deck == null) {
-                    fragment = new DeckStatistics();
-                    statistics_deck = fragment;
-                } else
-                    fragment = statistics_deck;
+                fragment = new DeckStatistics();
                 break;
             // ABOUT
             case R.id.nav_about:
-                if (about == null) {
-                    fragment = new About();
-                    about = fragment;
-                } else
-                    fragment = about;
+                fragment = new About();
                 break;
         }
         return fragment;
@@ -150,9 +137,30 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
     }
 
+    public void replaceFragment(final Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, fragment, fragment.getClass().getSimpleName())
+                .commit();
+    }
+
+    /**
+     * Switches the current fragment with the one passed as parameter.
+     * @param fragment
+     */
+    public void addFragment(final Fragment fragment) {
+        final Fragment hideFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.content_frame, fragment, fragment.getClass().getSimpleName())
+                .hide(hideFragment)
+                .addToBackStack(hideFragment.getClass().getSimpleName())
+                .commit();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(final MenuItem item) {
         displaySelectedScreen(item.getItemId());
         return true;
     }
@@ -173,5 +181,18 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         connectionHandler.unbind();
         super.onPause();
+    }
+
+    /**
+     * Method that sets the Navigation Drawer visible or non-visible.
+     * Used in certain fragments (e.g: Deck creation) for better UX.
+     * @param enabled
+     */
+    @Override
+    public void setDrawerEnabled(boolean enabled) {
+        int lockMode = enabled ? DrawerLayout.LOCK_MODE_UNLOCKED :
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
+        drawer.setDrawerLockMode(lockMode);
+        toggle.setDrawerIndicatorEnabled(enabled);
     }
 }

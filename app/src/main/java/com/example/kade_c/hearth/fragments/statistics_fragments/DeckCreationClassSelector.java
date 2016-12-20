@@ -1,16 +1,22 @@
-package com.example.kade_c.hearth;
+package com.example.kade_c.hearth.fragments.statistics_fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class DeckCreationClass extends Fragment {
+import com.example.kade_c.hearth.MainActivity;
+import com.example.kade_c.hearth.R;
+
+/**
+ * Handles the class selection on deck creation.
+ * Displays class icons and lets the user click on the one that is appropriate.
+ */
+public class DeckCreationClassSelector extends Fragment {
+
     View view;
 
     String classSelected;
@@ -19,6 +25,7 @@ public class DeckCreationClass extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.deck_creation_class, container, false);
 
+        ((MainActivity) getActivity()).setDrawerEnabled(false);
         setListeners();
 
         return view;
@@ -116,19 +123,14 @@ public class DeckCreationClass extends Fragment {
         });
     }
 
+    /**
+     * After selecting a class, we call the Name selection Fragment.
+     */
     private void callNameFragment() {
-        Fragment fragment = new DeckCreationName();
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Set argument
-        Bundle args = new Bundle();
-        args.putString("classSelected", classSelected);
-        fragment.setArguments(args);
-
-        fragmentTransaction.replace(R.id.content_frame, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        final Fragment homeFragment = new DeckCreationName();
+        final Bundle bundle = new Bundle();
+        bundle.putString("classSelected", classSelected);
+        homeFragment.setArguments(bundle);
+        ((MainActivity)getActivity()).addFragment(homeFragment);
     }
 }

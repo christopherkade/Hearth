@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.example.kade_c.hearth.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.kade_c.hearth.APIRequests;
+import com.example.kade_c.hearth.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,10 +22,12 @@ import java.util.concurrent.ExecutionException;
  * about the game and is an entry point to the app.
  */
 public class Home extends Fragment {
+
+    View view;
+
     private String xpac = "";
     private String patch = "";
     JSONObject info;
-    View view;
 
     @Nullable
     @Override

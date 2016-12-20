@@ -15,7 +15,7 @@ import java.net.URL;
  * - Card research by class
  * - Game info
  */
-class APIRequests {
+public class APIRequests {
 
     /**
      * Formats the card inputted like such:
@@ -40,7 +40,7 @@ class APIRequests {
      * Does a HTTP GET request to the Hearthstone API with the card stipulated.
      * @return a JSONObject containing information on the card inputted.
      */
-    JSONObject getCardInfo(String card) {
+    public JSONObject getCardInfo(String card) {
         String[] cardArray;
         String formattedCard;
         String urlStr;
@@ -93,7 +93,7 @@ class APIRequests {
      * @param classSelected class selected in the Spinner
      * @return a JSONArray containing the cards of said class
      */
-    JSONArray getClassCards(String classSelected, Integer cost) {
+    public JSONArray getClassCards(String classSelected, Integer cost) {
         String urlStr;
         URL url;
 
@@ -141,7 +141,7 @@ class APIRequests {
      * @return a JSONObject containing information such as the current expansions,
      * patch, classes etc.
      */
-    JSONObject getGameInfo() {
+    public JSONObject getGameInfo() {
         String urlStr;
         URL url;
 

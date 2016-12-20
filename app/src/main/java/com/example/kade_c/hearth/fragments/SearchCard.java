@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.example.kade_c.hearth.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,10 +12,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.kade_c.hearth.APIRequests;
+import com.example.kade_c.hearth.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 public class SearchCard extends Fragment {

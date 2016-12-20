@@ -1,19 +1,20 @@
-package com.example.kade_c.hearth;
+package com.example.kade_c.hearth.fragments.statistics_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.example.kade_c.hearth.MainActivity;
+import com.example.kade_c.hearth.R;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,21 +23,44 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Handles the Deck Statistics Fragment
+ * Lets the user create and delete decks and click on them in order to display statistics.
+ */
 public class DeckStatistics extends Fragment {
-    String FILENAME = "Deck_Info";
+
     View view;
+
+    // Name of our deck list file
+    String FILENAME = "Deck_Info";
+
+    // Our file's lines
     ArrayList<String> lines;
+
+    // Our list of decks
     private ListView mListView;
+
+    // True when the user has pressed the deletion mode button
     boolean deletion = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view =  inflater.inflate(R.layout.statistics_deck, container, false);
 
+        // Sets the Drawer as enabled.
+        ((MainActivity) getActivity()).setDrawerEnabled(true);
+
+        // Gets decks from file.
         saveDecksFromFile();
+
+        // Displays them in the ListView.
         displayDecks();
+
+        // Handles the selection of a deck by calling a Stat display fragment.
         handleDeckPress();
 
+        // When the user presses the '+' (Deck creation) button, call the DeckCreationClassSelector Fragment.
         Button createDeckButton = (Button) view.findViewById(R.id.newDeck_button);
         createDeckButton.setOnClickListener(new View.OnClickListener() {
 
@@ -46,16 +70,12 @@ public class DeckStatistics extends Fragment {
              */
             @Override
             public void onClick(View v) {
-                Fragment fragment = new DeckCreationClass();
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                final Fragment homeFragment = new DeckCreationClassSelector();
+                ((MainActivity)getActivity()).addFragment(homeFragment);
             }
         });
 
+        // Lets the user activate deck deletion with the '-' button.
         Button deleteDeckButton = (Button) view.findViewById(R.id.deleteDeck_button);
         deleteDeckButton.setOnClickListener(new View.OnClickListener() {
 
@@ -66,12 +86,12 @@ public class DeckStatistics extends Fragment {
             public void onClick(View v) {
                 if (deletion) {
                     Toast.makeText(getContext().getApplicationContext(),
-                            "Deletion mode stopped", Toast.LENGTH_LONG)
+                            "Deletion OFF", Toast.LENGTH_LONG)
                             .show();
                     deletion = false;
                 } else {
                     Toast.makeText(getContext().getApplicationContext(),
-                            "Selection deck to delete", Toast.LENGTH_LONG)
+                            "Deletion ON", Toast.LENGTH_LONG)
                             .show();
                     deletion = true;
                 }
@@ -85,6 +105,17 @@ public class DeckStatistics extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Deck Statistics");
+    }
+
+    /**
+     * Hides keyboard when going back to our Stat Fragment.
+     * @param savedInstanceState
+     */
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 
     // TODO: Find a cleaner way to delete line in our deck file.
@@ -111,7 +142,6 @@ public class DeckStatistics extends Fragment {
             FileOutputStream fileToUpdate = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
             BufferedReader writer = new BufferedReader(new FileReader(tempFile));
             while ((currentLine = writer.readLine()) != null) {
-                // trim newline when comparing with lineToRemove
                 String trimmedLine = currentLine.trim();
                 if (trimmedLine.equals(lineToRemove)) continue;
                 fileToUpdate.write(trimmedLine.getBytes());
@@ -121,9 +151,19 @@ public class DeckStatistics extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        deleteFile(deck);
     }
 
-    // TODO: Work on stat display for decks.
+    /**
+     * If a stat file exists, delete it.
+     * Is called when the user decides to delete a deck.
+     */
+    private void deleteFile(String fileToDelete) {
+        File dir = getActivity().getFilesDir();
+        File file = new File(dir, fileToDelete);
+        boolean deleted = file.delete();
+    }
+
     /**
      * Handles when a user presses on a deck.
      * If user has deletion mode on, delete deck and refresh deck list.
@@ -140,14 +180,26 @@ public class DeckStatistics extends Fragment {
                     saveDecksFromFile();
                     displayDecks();
                 } else {
-                    Toast.makeText(getContext().getApplicationContext(),
-                            "Display stats for deck number " + position, Toast.LENGTH_LONG)
-                            .show();
+                    openDeckStatsFragment(mListView.getItemAtPosition(position).toString());
                 }
             }
         });
     }
 
+    /**
+     * Opens the fragment for the deck that has been clicked on.
+     */
+    public void openDeckStatsFragment(String deck) {
+        final Fragment homeFragment = new DeckSelectedStatistics();
+        final Bundle bundle = new Bundle();
+        bundle.putString("deck", deck);
+        homeFragment.setArguments(bundle);
+        ((MainActivity)getActivity()).addFragment(homeFragment);
+    }
+
+    /**
+     * Displays decks in our ListView.
+     */
     public void displayDecks() {
         mListView = (ListView) view.findViewById(R.id.deckList);
         String[] deckList = new String[lines.size()];

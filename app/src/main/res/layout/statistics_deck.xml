@@ -15,7 +15,9 @@
         android:id="@+id/deckList"
         android:layout_alignBottom="@id/selectClass_text"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:focusableInTouchMode="false"
+        android:isScrollContainer="false" />
 
     <Button
         android:text="@string/deleteDeck_button"
