@@ -4,6 +4,7 @@ Hearthstone Information Kit - A simple informational app. for Hearthstone
 ## Features
 - Specific card searching
 - Class specific card searching
+- Deck-specific statistics
 
 ## Tools Used
 
