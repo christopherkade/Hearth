@@ -19,7 +19,7 @@ public class DeckCreationClassSelector extends Fragment {
 
     View view;
 
-    String classSelected;
+    private String classSelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {

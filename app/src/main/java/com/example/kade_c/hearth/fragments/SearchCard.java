@@ -63,7 +63,7 @@ public class SearchCard extends Fragment {
         getActivity().setTitle("Search Card");
     }
 
-    protected void displayImage(String currentImageURL) {
+    private void displayImage(String currentImageURL) {
         ImageView i = (ImageView)view.findViewById(R.id.cardImage);
 
         Glide.with(getContext()).load(currentImageURL)
@@ -77,11 +77,11 @@ public class SearchCard extends Fragment {
     /**
      * Takes care of requesting data from the API in an asynchronous way. (AsyncTask)
      */
-    public class Search extends AsyncTask<String, Integer, String> {
+    private class Search extends AsyncTask<String, Integer, String> {
         // The card that we search via the API.
         String searchedCard;
 
-        public Search(String card) {
+        Search(String card) {
             this.searchedCard = card;
         }
 

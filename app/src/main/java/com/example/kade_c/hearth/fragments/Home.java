@@ -27,7 +27,6 @@ public class Home extends Fragment {
 
     private String xpac = "";
     private String patch = "";
-    JSONObject info;
 
     @Nullable
     @Override
@@ -56,7 +55,7 @@ public class Home extends Fragment {
         String[] standard;
 
         try {
-            info = searchInfo.execute().get();
+            JSONObject info = searchInfo.execute().get();
             if (info != null) {
                 standardJSON = (JSONArray) info.get("standard");
                 standard = new String[standardJSON.length()];
@@ -87,7 +86,7 @@ public class Home extends Fragment {
      * Requests information from the API via APIRequests
      * Extends AsyncTask in order to do network-related actions in background.
      */
-    public class SearchInfo extends AsyncTask<Void, Integer, JSONObject> {
+    private class SearchInfo extends AsyncTask<Void, Integer, JSONObject> {
 
         @Override
         protected JSONObject doInBackground(Void... params) {

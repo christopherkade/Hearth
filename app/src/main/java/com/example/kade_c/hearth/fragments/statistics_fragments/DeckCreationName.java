@@ -25,13 +25,13 @@ public class DeckCreationName extends Fragment {
 
     View view;
 
-    String FILENAME = "Deck_Info";
+    private String FILENAME = "Deck_Info";
 
     // Name inputted.
-    String name;
+    private String name;
 
     // Class selected in the previous Fragment.
-    String classSelected;
+    private String classSelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class DeckCreationName extends Fragment {
     /**
      * Sets the class icon image for the Name selection Fragment.
      */
-    public void setClassImage() {
+    private void setClassImage() {
         ImageView img = (ImageView) view.findViewById(R.id.deckName_classImage);
         String classMin = classSelected.toLowerCase();
 
@@ -84,7 +84,7 @@ public class DeckCreationName extends Fragment {
      * Create file containing the newly created deck
      * Adds a "class | deck_name" line in our deck info file.
      */
-    public void createDeck() {
+    private void createDeck() {
         String deckInfo = classSelected + " | " + name;
 
         try {
@@ -100,7 +100,7 @@ public class DeckCreationName extends Fragment {
     /**
      * After inputting a name, we go back to our Deck Statistics fragment.
      */
-    public void callDeckFragment() {
+    private void callDeckFragment() {
         final Fragment homeFragment = new DeckStatistics();
         final Bundle bundle = new Bundle();
         bundle.putString("classSelected", classSelected);

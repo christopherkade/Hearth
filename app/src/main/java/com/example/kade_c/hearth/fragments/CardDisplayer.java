@@ -46,17 +46,17 @@ public class CardDisplayer extends Fragment {
     private int currentCost = -1;
 
     // Variables to check the value selected in our Class Spinner.
-    static final int NONE = 0;
-    static final int NEUTRAL = 1;
-    static final int MAGE = 2;
-    static final int HUNTER = 3;
-    static final int PALADIN = 4;
-    static final int WARRIOR = 5;
-    static final int DRUID = 6;
-    static final int WARLOCK = 7;
-    static final int SHAMAN = 8;
-    static final int PRIEST = 9;
-    static final int ROGUE = 10;
+    private static final int NONE = 0;
+    private static final int NEUTRAL = 1;
+    private static final int MAGE = 2;
+    private static final int HUNTER = 3;
+    private static final int PALADIN = 4;
+    private static final int WARRIOR = 5;
+    private static final int DRUID = 6;
+    private static final int WARLOCK = 7;
+    private static final int SHAMAN = 8;
+    private static final int PRIEST = 9;
+    private static final int ROGUE = 10;
 
     @Nullable
     @Override
@@ -122,7 +122,7 @@ public class CardDisplayer extends Fragment {
      * Displays the images.
      * Gets the correct URL, loads image in ImageView.
      */
-    protected void displayImage(String selectedType, int firstTime, int cost) {
+    private void displayImage(String selectedType, int firstTime, int cost) {
         try {
             ImageView i = (ImageView) view.findViewById(R.id.cardDisplay);
 
@@ -157,7 +157,7 @@ public class CardDisplayer extends Fragment {
     /**
      * Returns a String of the cost selected.
      */
-    public String getSelectedCost(int position) {
+    private String getSelectedCost(int position) {
         switch (position) {
             case 0:
                 return "All";
@@ -192,7 +192,7 @@ public class CardDisplayer extends Fragment {
     /**
      * Returns a String of the class selected.
      */
-    public String getSelectedType(int position) {
+    private String getSelectedType(int position) {
         switch (position) {
             case NONE:
                 return "None";
@@ -223,7 +223,7 @@ public class CardDisplayer extends Fragment {
     /**
      * Sets up our spinners and their listeners.
      */
-    public void handleSpinners() {
+    private void handleSpinners() {
         Spinner classSpinner = (Spinner) view.findViewById(R.id.typeSpinner);
         Spinner costSpinner = (Spinner) view.findViewById(R.id.costSpinner);
 
@@ -284,7 +284,7 @@ public class CardDisplayer extends Fragment {
      * it then retrieves the URL we need and returns it.
      * This class extends AsyncTask in order to do network-related calls in background.
      */
-    public class SearchClassCard extends AsyncTask<Integer, Integer, String> {
+    private class SearchClassCard extends AsyncTask<Integer, Integer, String> {
         String classSelected;
 
         /**

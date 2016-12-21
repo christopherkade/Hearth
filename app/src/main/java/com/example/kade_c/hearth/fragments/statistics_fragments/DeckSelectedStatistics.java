@@ -30,14 +30,20 @@ public class DeckSelectedStatistics extends Fragment {
     View view;
 
     // The name of the deck selected.
-    String deckName;
+    private String deckName;
+
+    // The class of the deck selected.
+    private String deckClass;
+
+    // Name of the file that contains deck stats.
+    private String fileName;
 
     // A list of lines in our deck specific stat file.
-    ArrayList<String> lines;
+    private ArrayList<String> lines;
 
-    Integer totalGame = 0;
-    Integer numVictories = 0;
-    Integer numDefeats = 0;
+    private Integer totalGame = 0;
+    private Integer numVictories = 0;
+    private Integer numDefeats = 0;
 
     /**
      * Saves deckName selected.
@@ -52,10 +58,12 @@ public class DeckSelectedStatistics extends Fragment {
         // Sets the Drawer as enabled.
         ((MainActivity) getActivity()).setDrawerEnabled(true);
 
-        deckName = getArguments().getString("deck");
+        deckName = getArguments().getString("deckName");
         if (deckName == null) {
             deckName = this.getArguments().getString("deckName");
         }
+
+        deckClass = getArguments().getString("deckClass");
 
         // Displays the right name and class icon.
         setDeckNameAndIcon();
@@ -104,10 +112,11 @@ public class DeckSelectedStatistics extends Fragment {
     /**
      * Opens the AddGame Fragment to get who they have won against.
      */
-    public void openAddGame(String type) {
+    private void openAddGame(String type) {
         final Fragment homeFragment = new AddGame();
         final Bundle bundle = new Bundle();
         bundle.putString("deckName", deckName);
+        bundle.putString("deckClass", deckClass);
         bundle.putString("type", type);
         homeFragment.setArguments(bundle);
         ((MainActivity)getActivity()).addFragment(homeFragment);
@@ -116,10 +125,11 @@ public class DeckSelectedStatistics extends Fragment {
     /**
      * Should create or open a file names after the deck and save it.
      */
-    public void openStatisticsFile() {
+    private void openStatisticsFile() {
         try {
-            FileOutputStream fos = getActivity().openFileOutput(deckName, Context.MODE_APPEND);
-            File file = getContext().getFileStreamPath(deckName);
+            fileName = deckClass + " | " + deckName;
+            FileOutputStream fos = getActivity().openFileOutput(fileName, Context.MODE_APPEND);
+            File file = getContext().getFileStreamPath(fileName);
             if (file.length() == 0)
                 fos.write(deckName.getBytes());
             fos.close();
@@ -131,8 +141,8 @@ public class DeckSelectedStatistics extends Fragment {
     /**
      * Open Deck specific stat file and reads its content.
      */
-    public void readStatisticsFile() {
-        File file = getContext().getFileStreamPath(deckName);
+    private void readStatisticsFile() {
+        File file = getContext().getFileStreamPath(fileName);
         String line = "";
         lines = new ArrayList<>();
         byte[] buffer = new byte[4096];
@@ -142,7 +152,7 @@ public class DeckSelectedStatistics extends Fragment {
         try {
             // Checks if file exists
             if (file != null && file.exists()) {
-                FileInputStream fos = getActivity().openFileInput(deckName);
+                FileInputStream fos = getActivity().openFileInput(fileName);
 
                 int i = 0;
                 for (ret = fos.read(buffer); ret > 0; ret--) {
@@ -166,26 +176,19 @@ public class DeckSelectedStatistics extends Fragment {
     /**
      * Displays the correct deck name and it's class icon.
      */
-    public void setDeckNameAndIcon() {
+    private void setDeckNameAndIcon() {
         TextView deckNameText = (TextView) view.findViewById(R.id.selectedDeckName_text);
-        ImageView img= (ImageView) view.findViewById(R.id.deck_stat_icon);
-        String[] array;
-        String deckClass;
-        String deck;
+        ImageView img = (ImageView) view.findViewById(R.id.deck_stat_icon);
 
-        array = deckName.split("\\|");
-        deckClass = array[0].trim().toLowerCase();
-        deck = array[1].trim();
-
-        deckNameText.setText(deck);
-        int resourceId = getActivity().getResources().getIdentifier(deckClass, "mipmap", getActivity().getPackageName());
+        deckNameText.setText(deckName);
+        int resourceId = getActivity().getResources().getIdentifier(deckClass.toLowerCase(), "mipmap", getActivity().getPackageName());
         img.setImageResource(resourceId);
     }
 
     /**
      * Sets the TextView values on the Fragment with the corresponding statistics.
      */
-    public void setStatValues(String percentageWin, String totalGames,
+    private void setStatValues(String percentageWin, String totalGames,
                               String totalWin, String totalLoss) {
         TextView victoryPercentageView = (TextView) view.findViewById(R.id.victory_percentage_value);
         TextView totalGamesView = (TextView) view.findViewById(R.id.total_games_value);
@@ -205,7 +208,7 @@ public class DeckSelectedStatistics extends Fragment {
      * Number of games won
      * Number of games lost
      */
-    public void calculateStats() {
+    private void calculateStats() {
         Float percentageWin = 0f;
 
         for (int i = 1; i < lines.size(); i ++) {

@@ -24,13 +24,16 @@ public class AddGame extends Fragment {
     View view;
 
     // Either 'V' for Victory or 'D' for 'Defeat'.
-    String type;
+    private String type;
 
     // Name of the deck concerned.
-    String deckName;
+    private String deckName;
+
+    // Class of the deck concerned.
+    private String deckClass;
 
     // Class the player has won against.
-    String wonAgainst;
+    private String wonAgainst;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +51,9 @@ public class AddGame extends Fragment {
             wonOrLostText.setText(R.string.defeat_class_select_text);
         }
 
+        // Saves deck name and class.
         deckName = this.getArguments().getString("deckName");
+        deckClass = this.getArguments().getString("deckClass");
 
         setListeners();
 
@@ -154,7 +159,8 @@ public class AddGame extends Fragment {
      */
     private void writeInStatFile() {
         try {
-            FileOutputStream fos = getActivity().openFileOutput(deckName, Context.MODE_APPEND);
+            String fileName = deckClass + " | " + deckName;
+            FileOutputStream fos = getActivity().openFileOutput(fileName, Context.MODE_APPEND);
 
             if (type.equals("V")) {
                 fos.write("V ".getBytes());
@@ -178,6 +184,7 @@ public class AddGame extends Fragment {
         final Fragment homeFragment = new DeckSelectedStatistics();
         final Bundle bundle = new Bundle();
         bundle.putString("deckName", deckName);
+        bundle.putString("deckClass", deckClass);
         homeFragment.setArguments(bundle);
         ((MainActivity)getActivity()).addFragment(homeFragment);
     }

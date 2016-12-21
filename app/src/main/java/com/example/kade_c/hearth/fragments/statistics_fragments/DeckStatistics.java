@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import com.example.kade_c.hearth.MainActivity;
 import com.example.kade_c.hearth.R;
@@ -22,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Handles the Deck Statistics Fragment
@@ -32,16 +34,19 @@ public class DeckStatistics extends Fragment {
     View view;
 
     // Name of our deck list file
-    String FILENAME = "Deck_Info";
+    private String FILENAME = "Deck_Info";
 
     // Our file's lines
-    ArrayList<String> lines;
+    private ArrayList<String> lines;
 
     // Our list of decks
     private ListView mListView;
 
+    private String[] deckClasses;
+    private String[] deckNames;
+
     // True when the user has pressed the deletion mode button
-    boolean deletion = false;
+    private boolean deletion = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -118,39 +123,42 @@ public class DeckStatistics extends Fragment {
         imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 
-    // TODO: Find a cleaner way to delete line in our deck file.
     /**
      * Goes through our deck file and deletes the 'deck' line.
      * @param deck
      */
-    public void deleteDeck(String deck)  {
+    private void deleteDeck(String deck, int lineToDelete)  {
         try {
-            File inputFile = getContext().getFileStreamPath(FILENAME);
-            FileOutputStream fos = getActivity().openFileOutput("temp_deck_list", Context.MODE_PRIVATE);
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            String lineToRemove = deck;
-            lineToRemove = lineToRemove.replace("\n", "");
+            // Reads file and saves file without deck to be deleted in temporary file.
+            File deckInfoFile = getContext().getFileStreamPath(FILENAME);
+            FileOutputStream tempFile = getActivity().openFileOutput("temp_deck_list", Context.MODE_PRIVATE);
+            BufferedReader reader = new BufferedReader(new FileReader(deckInfoFile));
             String currentLine;
+            int i = -1;
+
             while ((currentLine = reader.readLine()) != null) {
-                if (currentLine.equals(lineToRemove)) continue;
-                fos.write(currentLine.getBytes());
-                fos.write('\n');
+                i++;
+                if (i == lineToDelete) continue;
+                tempFile.write(currentLine.getBytes());
+                tempFile.write('\n');
             }
             reader.close();
 
-            File tempFile = getContext().getFileStreamPath("temp_deck_list");
+            // Then rewrites the temp file in our deck file.
+            File tempFile2 = getContext().getFileStreamPath("temp_deck_list");
             FileOutputStream fileToUpdate = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            BufferedReader writer = new BufferedReader(new FileReader(tempFile));
-            while ((currentLine = writer.readLine()) != null) {
-                String trimmedLine = currentLine.trim();
-                if (trimmedLine.equals(lineToRemove)) continue;
-                fileToUpdate.write(trimmedLine.getBytes());
+            BufferedReader tempFileReader = new BufferedReader(new FileReader(tempFile2));
+
+            while ((currentLine = tempFileReader.readLine()) != null) {
+                fileToUpdate.write(currentLine.getBytes());
                 fileToUpdate.write('\n');
             }
-            writer.close();
+            tempFileReader.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         deleteFile(deck);
     }
 
@@ -169,18 +177,18 @@ public class DeckStatistics extends Fragment {
      * If user has deletion mode on, delete deck and refresh deck list.
      * If not, display stats for said deck. (WIP)
      */
-    public void handleDeckPress() {
+    private void handleDeckPress() {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (deletion == true) {
                     deletion = false;
-                    deleteDeck(mListView.getItemAtPosition(position).toString());
+                    deleteDeck(mListView.getItemAtPosition(position).toString(), position);
                     saveDecksFromFile();
                     displayDecks();
                 } else {
-                    openDeckStatsFragment(mListView.getItemAtPosition(position).toString());
+                    openDeckStatsFragment(deckNames[position], deckClasses[position]); // mListView.getItemAtPosition(position).toString()
                 }
             }
         });
@@ -189,26 +197,52 @@ public class DeckStatistics extends Fragment {
     /**
      * Opens the fragment for the deck that has been clicked on.
      */
-    public void openDeckStatsFragment(String deck) {
+    private void openDeckStatsFragment(String deck, String deckClass) {
         final Fragment homeFragment = new DeckSelectedStatistics();
         final Bundle bundle = new Bundle();
-        bundle.putString("deck", deck);
+        bundle.putString("deckName", deck);
+        bundle.putString("deckClass", deckClass);
         homeFragment.setArguments(bundle);
         ((MainActivity)getActivity()).addFragment(homeFragment);
     }
 
     /**
-     * Displays decks in our ListView.
+     * Displays class icons and deck names in our custom ListView.
      */
-    public void displayDecks() {
+    private void displayDecks() {
         mListView = (ListView) view.findViewById(R.id.deckList);
-        String[] deckList = new String[lines.size()];
+
+        // Each row in the list stores Deck icon ID and deck name.
+        List<HashMap<String,String>> aList = new ArrayList<>();
+
+        // Stores our list of deck names and associated classes.
+        deckClasses = new String[lines.size()];
+        deckNames = new String[lines.size()];
 
         for (int i = 0; i < lines.size(); i++) {
-            deckList[i] = lines.get(i);
+            HashMap<String, String> hm = new HashMap<>();
+
+            String[] split = lines.get(i).split(" \\| ");
+            deckClasses[i] = split[0];
+            deckNames[i] = split[1];
+
+            // Find the right icon for the decks class.
+            Integer resourceId = getActivity().getResources().getIdentifier(deckClasses[i].toLowerCase(), "mipmap", getActivity().getPackageName());
+            hm.put("Class", resourceId.toString());
+            hm.put("Deck", deckNames[i]);
+            aList.add(hm);
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, deckList);
+        // Keys used in HashMap.
+        String[] from = { "Class","Deck" };
+
+        // IDs of views in our layout.
+        int[] to = { R.id.ivClass,R.id.tvName };
+
+        // Instantiating an adapter to store each items
+        // R.layout.deck_list defines the layout of each item.
+        SimpleAdapter adapter = new SimpleAdapter(view.getContext(), aList, R.layout.deck_list, from, to);
+
         mListView.setAdapter(adapter);
     }
 
@@ -216,7 +250,7 @@ public class DeckStatistics extends Fragment {
      * Reads from our deck list file and saves every line in
      * an ArrayList
      */
-    public void saveDecksFromFile() {
+    private void saveDecksFromFile() {
         File file = getContext().getFileStreamPath(FILENAME);
         String line = "";
         lines = new ArrayList<>();
