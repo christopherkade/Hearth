@@ -41,6 +41,10 @@ public class DeckSelectedStatistics extends Fragment {
     // A list of lines in our deck specific stat file.
     private ArrayList<String> lines;
 
+    // Our Internal file manager that handles the reading and writing of
+    // internal statistics files.
+    private InternalFilesManager.DeckFileManager DFM;
+
     private Integer totalGame = 0;
     private Integer numVictories = 0;
     private Integer numDefeats = 0;
@@ -53,7 +57,10 @@ public class DeckSelectedStatistics extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view =  inflater.inflate(R.layout.statistics_deck_selected, container, false);
+
+        DFM = new InternalFilesManager(getContext(), getActivity()). new DeckFileManager();
 
         // Sets the Drawer as enabled.
         ((MainActivity) getActivity()).setDrawerEnabled(true);
@@ -68,13 +75,10 @@ public class DeckSelectedStatistics extends Fragment {
         // Displays the right name and class icon.
         setDeckNameAndIcon();
 
-        // Open or creates the deck specific statistics file.
-        openStatisticsFile();
+        // Opens deck file and reads its information.
+        lines = DFM.getDeckFileInformation(deckClass, deckName);
 
-        // Reads the deck specific statistics file and saves lines in 'lines' ArrayList.
-        readStatisticsFile();
-
-        // Calculates stats and displays them in Fragment.
+        // Calculates stats with information from file and displays them.
         calculateStats();
 
         /**
@@ -122,56 +126,56 @@ public class DeckSelectedStatistics extends Fragment {
         ((MainActivity)getActivity()).addFragment(homeFragment);
     }
 
-    /**
-     * Should create or open a file names after the deck and save it.
-     */
-    private void openStatisticsFile() {
-        try {
-            fileName = deckClass + " | " + deckName;
-            FileOutputStream fos = getActivity().openFileOutput(fileName, Context.MODE_APPEND);
-            File file = getContext().getFileStreamPath(fileName);
-            if (file.length() == 0)
-                fos.write(deckName.getBytes());
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * Should create or open a file names after the deck and save it.
+//     */
+//    private void openStatisticsFile() {
+//        try {
+//            fileName = deckClass + " | " + deckName;
+//            FileOutputStream fos = getActivity().openFileOutput(fileName, Context.MODE_APPEND);
+//            File file = getContext().getFileStreamPath(fileName);
+//            if (file.length() == 0)
+//                fos.write(deckName.getBytes());
+//            fos.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    /**
-     * Open Deck specific stat file and reads its content.
-     */
-    private void readStatisticsFile() {
-        File file = getContext().getFileStreamPath(fileName);
-        String line = "";
-        lines = new ArrayList<>();
-        byte[] buffer = new byte[4096];
-        char c;
-        int ret;
-
-        try {
-            // Checks if file exists
-            if (file != null && file.exists()) {
-                FileInputStream fos = getActivity().openFileInput(fileName);
-
-                int i = 0;
-                for (ret = fos.read(buffer); ret > 0; ret--) {
-                    c = (char) buffer[i];
-                    line += c;
-                    i++;
-
-                    // At every new line, add the previous one to our ArrayList.
-                    if (c == '\n') {
-                        lines.add(line);
-                        line = "";
-                    }
-                }
-                fos.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * Open Deck specific stat file and reads its content.
+//     */
+//    private void readStatisticsFile() {
+//        File file = getContext().getFileStreamPath(fileName);
+//        String line = "";
+//        lines = new ArrayList<>();
+//        byte[] buffer = new byte[4096];
+//        char c;
+//        int ret;
+//
+//        try {
+//            // Checks if file exists
+//            if (file != null && file.exists()) {
+//                FileInputStream fos = getActivity().openFileInput(fileName);
+//
+//                int i = 0;
+//                for (ret = fos.read(buffer); ret > 0; ret--) {
+//                    c = (char) buffer[i];
+//                    line += c;
+//                    i++;
+//
+//                    // At every new line, add the previous one to our ArrayList.
+//                    if (c == '\n') {
+//                        lines.add(line);
+//                        line = "";
+//                    }
+//                }
+//                fos.close();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Displays the correct deck name and it's class icon.
@@ -195,7 +199,7 @@ public class DeckSelectedStatistics extends Fragment {
         TextView totalWonView = (TextView) view.findViewById(R.id.game_won_value);
         TextView totalLostView = (TextView) view.findViewById(R.id.game_lost_value);
 
-        victoryPercentageView.setText(percentageWin.toString() + "%");
+        victoryPercentageView.setText(percentageWin + "%");
         totalGamesView.setText(totalGames);
         totalWonView.setText(totalWin);
         totalLostView.setText(totalLoss);

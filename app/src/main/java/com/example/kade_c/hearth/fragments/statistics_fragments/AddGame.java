@@ -35,9 +35,15 @@ public class AddGame extends Fragment {
     // Class the player has won against.
     private String wonAgainst;
 
+    // Our internal file manager that writes in our deck files.
+    private InternalFilesManager.DeckFileManager DFM;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view =  inflater.inflate(R.layout.add_game, container, false);
+
+        DFM = new InternalFilesManager(getContext(), getActivity()). new DeckFileManager();
 
         ((MainActivity) getActivity()).setDrawerEnabled(false);
 
@@ -75,7 +81,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Mage";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -84,7 +91,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Hunter";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -93,7 +101,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Paladin";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -102,7 +111,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Warrior";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -111,7 +121,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Druid";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -120,7 +131,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Warlock";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -129,7 +141,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Shaman";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -138,7 +151,8 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Priest";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
 
@@ -147,34 +161,10 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Rogue";
-                writeInStatFile();
+                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                callLastFragment();
             }
         });
-    }
-
-    /**
-     * Writes the inputted information in our deck-specific file.
-     * Line format:
-     * [V/D] [Class]
-     */
-    private void writeInStatFile() {
-        try {
-            String fileName = deckClass + " | " + deckName;
-            FileOutputStream fos = getActivity().openFileOutput(fileName, Context.MODE_APPEND);
-
-            if (type.equals("V")) {
-                fos.write("V ".getBytes());
-            } else if (type.equals("D")) {
-                fos.write("D ".getBytes());
-            }
-            fos.write(wonAgainst.getBytes());
-            fos.write('\n');
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        callLastFragment();
     }
 
     /**

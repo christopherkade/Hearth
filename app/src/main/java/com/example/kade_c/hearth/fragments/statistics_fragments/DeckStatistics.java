@@ -15,12 +15,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import com.example.kade_c.hearth.MainActivity;
 import com.example.kade_c.hearth.R;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +27,6 @@ import java.util.List;
 public class DeckStatistics extends Fragment {
 
     View view;
-
-    // Name of our deck list file
-    private String FILENAME = "Deck_Info";
 
     // Our file's lines
     private ArrayList<String> lines;
@@ -48,21 +40,27 @@ public class DeckStatistics extends Fragment {
     // True when the user has pressed the deletion mode button
     private boolean deletion = false;
 
+    // Our Internal File Manager that handles reading and writing in our Internal files.
+    private InternalFilesManager.DeckListFileManager DLFM;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view =  inflater.inflate(R.layout.statistics_deck, container, false);
 
+        DLFM = new InternalFilesManager(getContext(), getActivity()). new DeckListFileManager();
+
+
         // Sets the Drawer as enabled.
         ((MainActivity) getActivity()).setDrawerEnabled(true);
 
         // Gets decks from file.
-        saveDecksFromFile();
+        lines = DLFM.getDecksFromFile();
 
-        // Displays them in the ListView.
-        displayDecks();
+        // Refresh deck list.
+        refreshDeckList();
 
-        // Handles the selection of a deck by calling a Stat display fragment.
+        // Handles if user clicks on a deck in the list.
         handleDeckPress();
 
         // When the user presses the '+' (Deck creation) button, call the DeckCreationClassSelector Fragment.
@@ -124,55 +122,6 @@ public class DeckStatistics extends Fragment {
     }
 
     /**
-     * Goes through our deck file and deletes the 'deck' line.
-     * @param deck
-     */
-    private void deleteDeck(String deck, int lineToDelete)  {
-        try {
-            // Reads file and saves file without deck to be deleted in temporary file.
-            File deckInfoFile = getContext().getFileStreamPath(FILENAME);
-            FileOutputStream tempFile = getActivity().openFileOutput("temp_deck_list", Context.MODE_PRIVATE);
-            BufferedReader reader = new BufferedReader(new FileReader(deckInfoFile));
-            String currentLine;
-            int i = -1;
-
-            while ((currentLine = reader.readLine()) != null) {
-                i++;
-                if (i == lineToDelete) continue;
-                tempFile.write(currentLine.getBytes());
-                tempFile.write('\n');
-            }
-            reader.close();
-
-            // Then rewrites the temp file in our deck file.
-            File tempFile2 = getContext().getFileStreamPath("temp_deck_list");
-            FileOutputStream fileToUpdate = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            BufferedReader tempFileReader = new BufferedReader(new FileReader(tempFile2));
-
-            while ((currentLine = tempFileReader.readLine()) != null) {
-                fileToUpdate.write(currentLine.getBytes());
-                fileToUpdate.write('\n');
-            }
-            tempFileReader.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        deleteFile(deck);
-    }
-
-    /**
-     * If a stat file exists, delete it.
-     * Is called when the user decides to delete a deck.
-     */
-    private void deleteFile(String fileToDelete) {
-        File dir = getActivity().getFilesDir();
-        File file = new File(dir, fileToDelete);
-        boolean deleted = file.delete();
-    }
-
-    /**
      * Handles when a user presses on a deck.
      * If user has deletion mode on, delete deck and refresh deck list.
      * If not, display stats for said deck. (WIP)
@@ -184,11 +133,11 @@ public class DeckStatistics extends Fragment {
                                     int position, long id) {
                 if (deletion == true) {
                     deletion = false;
-                    deleteDeck(mListView.getItemAtPosition(position).toString(), position);
-                    saveDecksFromFile();
-                    displayDecks();
+                    String fileToDelete = deckClasses[position] + " | " + deckNames[position];
+                    lines = DLFM.deleteDeckFromList(fileToDelete, position);
+                    refreshDeckList();
                 } else {
-                    openDeckStatsFragment(deckNames[position], deckClasses[position]); // mListView.getItemAtPosition(position).toString()
+                    openDeckStatsFragment(deckNames[position], deckClasses[position]);
                 }
             }
         });
@@ -207,9 +156,9 @@ public class DeckStatistics extends Fragment {
     }
 
     /**
-     * Displays class icons and deck names in our custom ListView.
+     * Sets the decks in our deck file in the ListView.
      */
-    private void displayDecks() {
+    private void refreshDeckList() {
         mListView = (ListView) view.findViewById(R.id.deckList);
 
         // Each row in the list stores Deck icon ID and deck name.
@@ -244,41 +193,5 @@ public class DeckStatistics extends Fragment {
         SimpleAdapter adapter = new SimpleAdapter(view.getContext(), aList, R.layout.deck_list, from, to);
 
         mListView.setAdapter(adapter);
-    }
-
-    /**
-     * Reads from our deck list file and saves every line in
-     * an ArrayList
-     */
-    private void saveDecksFromFile() {
-        File file = getContext().getFileStreamPath(FILENAME);
-        String line = "";
-        lines = new ArrayList<>();
-        byte[] buffer = new byte[4096];
-        char c;
-        int ret;
-
-        try {
-            // Checks if file exists
-            if (file != null && file.exists()) {
-                FileInputStream fos = getActivity().openFileInput(FILENAME);
-
-                int i = 0;
-                for (ret = fos.read(buffer); ret > 0; ret--) {
-                    c = (char) buffer[i];
-                    line += c;
-                    i++;
-
-                    // At every new line, add the previous one to our ArrayList.
-                    if (c == '\n') {
-                        lines.add(line);
-                        line = "";
-                    }
-                }
-                fos.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
