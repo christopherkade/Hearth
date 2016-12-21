@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.kade_c.hearth.fragments.About;
 import com.kade_c.hearth.fragments.CardDisplayer;
 import com.kade_c.hearth.fragments.statistics_fragments.DeckStatistics;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity
     ActionBarDrawerToggle toggle;
 
     private NavigationView navigationView;
+
+    private Fragment HomeFragment;
 
     /**
      * Entry point to our application.
@@ -54,7 +58,8 @@ public class MainActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        //drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -89,6 +94,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Checks which item has been selected and instantiates the corresponding Fragment.
+     * Home will not be instantiated twice in order to avoid useless API requests.
      * @param itemId id of the item selected.
      * @return the fragment to be displayed.
      */
@@ -98,7 +104,12 @@ public class MainActivity extends AppCompatActivity
         switch (itemId) {
             // HOME
             case R.id.nav_home:
-                fragment = new Home();
+                if (HomeFragment == null) {
+                    fragment = new Home();
+                    HomeFragment = fragment;
+                } else {
+                    fragment = HomeFragment;
+                }
                 break;
             // SEARCH CARD
             case R.id.nav_searchCard:
@@ -131,9 +142,18 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
         fragment = checkFragmentState(itemId);
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.commit();
+        this.replaceFragment(fragment);
+    }
+
+    /**
+     * Replaces the current fragment and closes the Drawer.
+     * @param fragment
+     */
+    public void replaceFragment(final Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, fragment, fragment.getClass().getSimpleName())
+                .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -141,15 +161,8 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
     }
 
-    public void replaceFragment(final Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, fragment, fragment.getClass().getSimpleName())
-                .commit();
-    }
-
     /**
-     * Switches the current fragment with the one passed as parameter.
+     * Adds a new fragment passed as parameter.
      * @param fragment
      */
     public void addFragment(final Fragment fragment) {
@@ -165,8 +178,11 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(final MenuItem item) {
-        navigationView.getMenu().findItem(R.id.nav_home).setChecked(false);
         displaySelectedScreen(item.getItemId());
+        drawer.closeDrawer(GravityCompat.START);
+
+        if (item.getItemId() != R.id.nav_home)
+            navigationView.getMenu().findItem(R.id.nav_home).setChecked(false);
         return true;
     }
 

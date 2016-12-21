@@ -28,12 +28,28 @@ public class Home extends Fragment {
     private String xpac = "";
     private String patch = "";
 
+    TextView xpacValue;
+    TextView patchValue;
+
+    // true when API Request has already been done for this session.
+    boolean requestDone = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.home, container, false);
 
-        handleGameInformation();
+        xpacValue = (TextView) view.findViewById(R.id.xpac_value);
+        patchValue = (TextView) view.findViewById(R.id.patch_value);
+
+        // Checks if we have already done an API request.
+        // Gets expansion name and patch.
+        if (!requestDone) {
+            getGameInfo();
+        }
+
+        // Sets information
+        displayGameInfo();
 
         return view;
     }
@@ -45,37 +61,31 @@ public class Home extends Fragment {
     }
 
     /**
-     * Saves the current expansion and patch and displays them.
+     * Sets values to their TextViews
      */
-    private void handleGameInformation() {
+    private void displayGameInfo() {
+        xpacValue.setText(xpac);
+        patchValue.setText(patch);
+    }
+
+    /**
+     * Saves the current expansion and patch
+     */
+    private void getGameInfo() {
         SearchInfo searchInfo = new SearchInfo();
         JSONArray standardJSON;
-
-        // Standard expansions
-        String[] standard;
 
         try {
             JSONObject info = searchInfo.execute().get();
             if (info != null) {
                 standardJSON = (JSONArray) info.get("standard");
-                standard = new String[standardJSON.length()];
+                int len = standardJSON.length() - 1;
 
                 // Get the xpac value
-                for (int i = 0; i < standardJSON.length(); i++) {
-                    standard[i] = standardJSON.getString(i);
-                    if (i + 1 == standardJSON.length()) {
-                        xpac = standard[i];
-                    }
-                }
+                xpac = standardJSON.getString(len);
 
                 // Get the patch value
                 patch = (String) info.get("patch");
-
-                // Sets information
-                TextView xpacValue = (TextView) view.findViewById(R.id.xpac_value);
-                xpacValue.setText(xpac);
-                TextView patchValue = (TextView) view.findViewById(R.id.patch_value);
-                patchValue.setText(patch);
             }
         } catch (ExecutionException | InterruptedException | JSONException e) {
             e.printStackTrace();
@@ -94,6 +104,8 @@ public class Home extends Fragment {
 
             APIRequests apiRequests = new APIRequests();
             information = apiRequests.getGameInfo();
+
+            requestDone = true;
 
             return information;
         }
