@@ -10,32 +10,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-
     <TextView
+        android:id="@+id/selectedDeckName_text"
         android:text="@string/default_deckName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/selectedDeckName_text"
         android:textSize="40sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/total_games_value"
         android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40sp"
-        android:id="@+id/total_games_value"
         android:layout_alignBaseline="@+id/total_games_text"
         android:layout_alignBottom="@+id/total_games_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <TextView
+        android:id="@+id/total_games_text"
         android:text="@string/total_games_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/total_games_text"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/total_games_value"
         android:layout_toEndOf="@+id/total_games_value"
@@ -43,11 +42,11 @@
         android:layout_marginStart="35dp" />
 
     <TextView
+        android:id="@+id/game_won_value"
         android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:id="@+id/game_won_value"
         android:layout_below="@+id/total_games_value"
         android:layout_toEndOf="@+id/total_games_value"
         android:layout_alignParentLeft="true"
@@ -55,80 +54,78 @@
         android:layout_toRightOf="@+id/total_games_value" />
 
     <TextView
+        android:id="@+id/games_won_text"
         android:text="@string/games_won_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/games_won_text"
         android:layout_alignBaseline="@+id/game_won_value"
         android:layout_alignBottom="@+id/game_won_value"
         android:layout_alignLeft="@+id/total_games_text"
         android:layout_alignStart="@+id/total_games_text" />
 
     <TextView
+        android:id="@+id/game_lost_value"
         android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/game_won_value"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="20sp"
-        android:id="@+id/game_lost_value" />
+        android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/game_lost_text"
         android:text="@string/game_lost_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_lost_text"
         android:layout_alignBaseline="@+id/game_lost_value"
         android:layout_alignBottom="@+id/game_lost_value"
         android:layout_alignLeft="@+id/games_won_text"
         android:layout_alignStart="@+id/games_won_text" />
 
     <TextView
+        android:id="@+id/victory_percentage_value"
         android:text="@string/default_victory_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/victory_percentage_value"
         android:textSize="40dp"
         android:layout_above="@+id/total_games_value"
         android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/victory_percentage_text"
         android:text="@string/victory_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/victory_percentage_text"
         android:layout_above="@+id/victory_percentage_value"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:text="@string/add_victory_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/addVictory_button"
-        android:layout_above="@+id/victory_percentage_text"
-        android:layout_toRightOf="@+id/total_games_value"
-        android:layout_toEndOf="@+id/total_games_value"
-        android:layout_marginBottom="22dp" />
-
     <ImageView
+        android:id="@+id/deck_stat_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/mage"
-        android:id="@+id/deck_stat_icon"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
+        android:id="@+id/addDefeat_button"
         android:text="@string/add_defeat_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addDefeat_button"
-        android:layout_alignBaseline="@+id/addVictory_button"
+
+        android:layout_marginTop="40dp"
         android:layout_alignBottom="@+id/addVictory_button"
-        android:layout_alignLeft="@+id/victory_percentage_value"
-        android:layout_alignStart="@+id/victory_percentage_value"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp" />
+        android:layout_toRightOf="@+id/addVictory_button" />
+
+    <Button
+        android:id="@+id/addVictory_button"
+        android:text="@string/add_victory_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="35dp" />
 </RelativeLayout>
