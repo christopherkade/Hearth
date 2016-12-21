@@ -19,4 +19,4 @@ API:
 <img src="https://cloud.githubusercontent.com/assets/15229355/21393030/f3ecc6fc-c792-11e6-8fe6-c39bfa3d2375.png" width="430">
 <img src="https://cloud.githubusercontent.com/assets/15229355/21393033/f593cf00-c792-11e6-916f-0eb39cf3fc48.png" width="430">
 <img src="https://cloud.githubusercontent.com/assets/15229355/21393093/31aab7d8-c793-11e6-8dce-886857ece648.png" width="430">
-<img src="https://cloud.githubusercontent.com/assets/15229355/21393037/f900659a-c792-11e6-9baa-3f29a1be57c0.png" width="430">
+<img src="https://cloud.githubusercontent.com/assets/15229355/21400442/58b2fcb0-c7b0-11e6-9b00-427935168a1d.png" width="430">
