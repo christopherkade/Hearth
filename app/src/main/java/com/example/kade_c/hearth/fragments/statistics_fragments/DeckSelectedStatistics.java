@@ -1,6 +1,5 @@
 package com.example.kade_c.hearth.fragments.statistics_fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,10 +13,6 @@ import android.widget.TextView;
 import com.example.kade_c.hearth.MainActivity;
 import com.example.kade_c.hearth.R;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -125,57 +120,6 @@ public class DeckSelectedStatistics extends Fragment {
         homeFragment.setArguments(bundle);
         ((MainActivity)getActivity()).addFragment(homeFragment);
     }
-
-//    /**
-//     * Should create or open a file names after the deck and save it.
-//     */
-//    private void openStatisticsFile() {
-//        try {
-//            fileName = deckClass + " | " + deckName;
-//            FileOutputStream fos = getActivity().openFileOutput(fileName, Context.MODE_APPEND);
-//            File file = getContext().getFileStreamPath(fileName);
-//            if (file.length() == 0)
-//                fos.write(deckName.getBytes());
-//            fos.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    /**
-//     * Open Deck specific stat file and reads its content.
-//     */
-//    private void readStatisticsFile() {
-//        File file = getContext().getFileStreamPath(fileName);
-//        String line = "";
-//        lines = new ArrayList<>();
-//        byte[] buffer = new byte[4096];
-//        char c;
-//        int ret;
-//
-//        try {
-//            // Checks if file exists
-//            if (file != null && file.exists()) {
-//                FileInputStream fos = getActivity().openFileInput(fileName);
-//
-//                int i = 0;
-//                for (ret = fos.read(buffer); ret > 0; ret--) {
-//                    c = (char) buffer[i];
-//                    line += c;
-//                    i++;
-//
-//                    // At every new line, add the previous one to our ArrayList.
-//                    if (c == '\n') {
-//                        lines.add(line);
-//                        line = "";
-//                    }
-//                }
-//                fos.close();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
      * Displays the correct deck name and it's class icon.
