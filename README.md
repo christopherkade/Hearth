@@ -1,5 +1,5 @@
 # Hearth
-Hearthstone Information Kit - A simple informational app. for Hearthstone
+Hearthstone Companion App - A simple informational app. for Hearthstone
 
 ## Features
 - Specific card searching
