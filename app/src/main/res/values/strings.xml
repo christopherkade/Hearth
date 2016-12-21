@@ -3,16 +3,15 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="WelcomeMessage" />
+    <string name="welcome_text">Welcome to Hearth !</string>
+    <string name="welcome_text2">Hearthstone Companion App</string>
+    <string name="xpac_text">Latest expansion</string>
+    <string name="patch_text">Current patch</string>
     <string name="searchField_text">Card name</string>
     <string name="search_button">Search</string>
     <string name="type_text">Type</string>
     <string name="card_not_found_text">Card Not Found</string>
     <string name="cost_text">Cost</string>
-    <string name="welcome_text">Welcome to Hearth !</string>
-    <string name="xpac_text">Current expansion</string>
-    <string name="patch_text">Current patch</string>
-    <string name="welcome_text2">Hearthstone Information Kit</string>
     <string name="developedBy_text">Developed By</string>
     <string name="developerName_text">Christopher Kadé</string>
     <string name="email_text">E-mail</string>
