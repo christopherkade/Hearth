@@ -44,6 +44,10 @@
     <string name="total_games_text">games played</string>
     <string name="games_won_text">won</string>
     <string name="game_lost_text">lost</string>
+    <string name="total_victory_percentage_text">Total victory percentage</string>
+    <string name="total_victory_percentage_value">0%</string>
+    <string name="total_active_decks_value">active decks</string>
+    <string name="total_active_decks_default_value">0</string>
 
     <string-array name="type_array">
         <item>None</item>

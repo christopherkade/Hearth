@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.kade_c.hearth.InternalFilesManager;
 import com.kade_c.hearth.MainActivity;
 import com.kade_c.hearth.R;
 

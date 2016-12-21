@@ -1,4 +1,4 @@
-package com.kade_c.hearth.fragments.statistics_fragments;
+package com.kade_c.hearth;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
@@ -36,7 +36,7 @@ public class InternalFilesManager {
          * Reads from our deck list file and saves every line in
          * an ArrayList
          */
-        protected ArrayList<String> getDecksFromFile() {
+        public ArrayList<String> getDecksFromFile() {
             ArrayList<String> lines;
             File file = context.getFileStreamPath(DECK_LIST_FILE);
             String line = "";
@@ -74,7 +74,7 @@ public class InternalFilesManager {
          * Deletes the line passed as parameter from the decks list file.
          * @param lineToDelete
          */
-        protected void deleteDeckFromFile(int lineToDelete) {
+        private void deleteDeckFromFile(int lineToDelete) {
             try {
                 // Reads file and saves file without deck to be deleted in temporary file.
                 File deckInfoFile = context.getFileStreamPath(DECK_LIST_FILE);
@@ -122,7 +122,7 @@ public class InternalFilesManager {
          * and returns an ArrayList<String> containing currently
          * available decks.
          */
-        protected ArrayList<String> deleteDeckFromList(String deck, int position) {
+        public ArrayList<String> deleteDeckFromList(String deck, int position) {
             deleteDeckFromFile(position);
             deleteDeckFile(deck);
             return getDecksFromFile();
@@ -134,21 +134,21 @@ public class InternalFilesManager {
      */
     public class DeckFileManager {
 
-        protected ArrayList<String> getDeckFileInformation(String deckClass, String deckName) {
+        public ArrayList<String> getDeckFileInformation(String deckClass, String deckName) {
             String fileName = deckClass + " | " + deckName;
-            openStatisticsFile(deckName, fileName);
+            openStatisticsFile(fileName);
             return readStatisticsFile(fileName);
         }
 
         /**
          * Should create or open a file names after the deck and save it.
          */
-        protected void openStatisticsFile(String deckName, String fileName) {
+        private void openStatisticsFile(String fileName) {
             try {
                 FileOutputStream fos = fActivity.openFileOutput(fileName, Context.MODE_APPEND);
                 File file = context.getFileStreamPath(fileName);
                 if (file.length() == 0)
-                    fos.write(deckName.getBytes());
+                    fos.write(fileName.getBytes());
                 fos.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -158,7 +158,7 @@ public class InternalFilesManager {
         /**
          * Open Deck specific stat file and reads its content.
          */
-        protected ArrayList<String> readStatisticsFile(String fileName) {
+        public ArrayList<String> readStatisticsFile(String fileName) {
             ArrayList<String> lines = new ArrayList<>();
             File file = context.getFileStreamPath(fileName);
             String line = "";
@@ -196,7 +196,7 @@ public class InternalFilesManager {
          * Line format:
          * [V/D] [Class]
          */
-        protected void writeInStatFile(String deckClass, String deckName,
+        public void writeInStatFile(String deckClass, String deckName,
                                      String type, String wonAgainst) {
             try {
                 String fileName = deckClass + " | " + deckName;

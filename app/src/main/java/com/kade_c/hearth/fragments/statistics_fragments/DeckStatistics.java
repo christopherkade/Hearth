@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import com.kade_c.hearth.InternalFilesManager;
 import com.kade_c.hearth.MainActivity;
 import com.kade_c.hearth.R;
 
@@ -155,7 +157,7 @@ public class DeckStatistics extends Fragment {
     }
 
     /**
-     * Sets the decks in our deck file in the ListView.
+     * Refreshes the decks and class icons displayed in the ListView.
      */
     private void refreshDeckList() {
         mListView = (ListView) view.findViewById(R.id.deckList);

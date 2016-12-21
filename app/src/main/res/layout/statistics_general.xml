@@ -9,4 +9,106 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
+    <TextView
+        android:text="@string/total_victory_percentage_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:id="@+id/total_victory_percentage_text" />
+
+    <TextView
+        android:text="@string/total_victory_percentage_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/total_victory_percentage_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:id="@+id/total_victory_percentage_value"
+        android:textSize="40sp"/>
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:id="@+id/total_games_played_value"
+        android:layout_alignBaseline="@+id/total_games_played_text"
+        android:layout_alignBottom="@+id/total_games_played_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:id="@+id/total_games_won_value"
+        android:layout_below="@+id/total_games_played_value"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:id="@+id/total_games_lost_value"
+        android:layout_below="@+id/total_games_won_value"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/game_lost_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_games_lost_text"
+        android:layout_alignBaseline="@+id/total_games_lost_value"
+        android:layout_alignBottom="@+id/total_games_lost_value"
+        android:layout_alignLeft="@+id/total_games_played_text"
+        android:layout_alignStart="@+id/total_games_played_text" />
+
+    <TextView
+        android:text="@string/games_won_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_games_won_text"
+        android:layout_alignBaseline="@+id/total_games_won_value"
+        android:layout_alignBottom="@+id/total_games_won_value"
+        android:layout_alignLeft="@+id/total_games_lost_text"
+        android:layout_alignStart="@+id/total_games_lost_text" />
+
+    <TextView
+        android:text="@string/total_games_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_games_played_text"
+        android:layout_marginRight="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_below="@+id/total_victory_percentage_value"
+        android:layout_alignRight="@+id/total_victory_percentage_value"
+        android:layout_alignEnd="@+id/total_victory_percentage_value"
+        android:layout_marginTop="187dp" />
+
+    <TextView
+        android:text="@string/total_active_decks_default_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:id="@+id/total_active_decks_value"
+        android:layout_alignBaseline="@+id/total_active_decks_text"
+        android:layout_alignBottom="@+id/total_active_decks_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/total_active_decks_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_active_decks_text"
+        android:layout_above="@+id/total_games_played_value"
+        android:layout_alignLeft="@+id/total_games_played_text"
+        android:layout_alignStart="@+id/total_games_played_text"
+        android:layout_marginBottom="62dp" />
 </RelativeLayout>
