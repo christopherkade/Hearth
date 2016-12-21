@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity
     // Our toggler for the Navigation Drawer.
     ActionBarDrawerToggle toggle;
 
+    private NavigationView navigationView;
+
     /**
      * Entry point to our application.
      * Checks is our user is connected and initializes our ConnectionHandler.
@@ -55,9 +57,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(0).setChecked(true);
+
+        // Sets the 'Home' tab as selected (by default).
+        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
 
         // Display home Fragment.
         displaySelectedScreen(R.id.nav_home);
@@ -161,6 +165,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(final MenuItem item) {
+        navigationView.getMenu().findItem(R.id.nav_home).setChecked(false);
         displaySelectedScreen(item.getItemId());
         return true;
     }
