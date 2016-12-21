@@ -1,5 +1,6 @@
 package com.kade_c.hearth.fragments;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +28,7 @@ public class SearchCard extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.search, container, false);
 
         Button button = (Button) view.findViewById(R.id.searchButton);
@@ -38,18 +41,23 @@ public class SearchCard extends Fragment {
             public void onClick(View v) {
                 EditText searchedCard = (EditText) view.findViewById(R.id.searchField);
 
-                // Get the inputted name as a String
+                // Get the inputted name as a String.
                 String searchedCardString = searchedCard.getText().toString();
 
                 try {
                     Search searchCard = new Search(searchedCardString);
 
-                    // Get the image URL
+                    // Get the image URL.
                     String currentImageURL = searchCard.execute().get();
 
-                    // Display it
+                    // Display it.
                     displayImage(currentImageURL);
-                } catch (InterruptedException | ExecutionException e) {
+
+                    // Hide keyboard.
+                    final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+
+                } catch (InterruptedException | ExecutionException | NullPointerException e) {
                     e.printStackTrace();
                 }
             }
