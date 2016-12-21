@@ -1,5 +1,5 @@
 # Hearth
-Hearthstone Information Kit - A simple informational app. for Hearthstone
+Hearthstone Companion App - A simple informational app. for Hearthstone
 
 ## Features
 - Specific card searching
@@ -16,7 +16,7 @@ Libraries:
 API:
 - [Hearthstone API] (http://hearthstoneapi.com/)
 
-<img src="https://cloud.githubusercontent.com/assets/15229355/21320489/8848197e-c611-11e6-9f9f-e8adc579bf01.png" width="430">
-<img src="https://cloud.githubusercontent.com/assets/15229355/21370113/72f7ad6a-c70a-11e6-9ee8-fa01589ecf09.png" width="430">
-<img src="https://cloud.githubusercontent.com/assets/15229355/21320499/924037b8-c611-11e6-88c8-24f5b170fa2a.png" width="430">
-<img src="https://cloud.githubusercontent.com/assets/15229355/21370163/c46847fe-c70a-11e6-9cf1-30ab9db08bd4.png" width="430">
+<img src="https://cloud.githubusercontent.com/assets/15229355/21393030/f3ecc6fc-c792-11e6-8fe6-c39bfa3d2375.png" width="430">
+<img src="https://cloud.githubusercontent.com/assets/15229355/21393033/f593cf00-c792-11e6-916f-0eb39cf3fc48.png" width="430">
+<img src="https://cloud.githubusercontent.com/assets/15229355/21393093/31aab7d8-c793-11e6-8dce-886857ece648.png" width="430">
+<img src="https://cloud.githubusercontent.com/assets/15229355/21393037/f900659a-c792-11e6-9baa-3f29a1be57c0.png" width="430">
