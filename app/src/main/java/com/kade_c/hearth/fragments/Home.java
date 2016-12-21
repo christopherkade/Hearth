@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth.fragments;
+package com.kade_c.hearth.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.kade_c.hearth.APIRequests;
-import com.example.kade_c.hearth.R;
+import com.kade_c.hearth.APIRequests;
+import com.kade_c.hearth.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

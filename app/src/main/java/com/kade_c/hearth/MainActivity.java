@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.kade_c.hearth;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,12 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.example.kade_c.hearth.fragments.About;
-import com.example.kade_c.hearth.fragments.CardDisplayer;
-import com.example.kade_c.hearth.fragments.statistics_fragments.DeckStatistics;
-import com.example.kade_c.hearth.fragments.statistics_fragments.GeneralStatistics;
-import com.example.kade_c.hearth.fragments.Home;
-import com.example.kade_c.hearth.fragments.SearchCard;
+import com.kade_c.hearth.fragments.About;
+import com.kade_c.hearth.fragments.CardDisplayer;
+import com.kade_c.hearth.fragments.statistics_fragments.DeckStatistics;
+import com.kade_c.hearth.fragments.statistics_fragments.GeneralStatistics;
+import com.kade_c.hearth.fragments.Home;
+import com.kade_c.hearth.fragments.SearchCard;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DrawerLocker.DrawerLockerItf {

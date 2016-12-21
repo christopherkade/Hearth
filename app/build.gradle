@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.kade_c.hearth"
+        applicationId "com.kade_c.hearth"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1

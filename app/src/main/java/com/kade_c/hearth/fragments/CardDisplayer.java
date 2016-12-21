@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth.fragments;
+package com.kade_c.hearth.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.kade_c.hearth.APIRequests;
-import com.example.kade_c.hearth.R;
+import com.kade_c.hearth.APIRequests;
+import com.kade_c.hearth.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

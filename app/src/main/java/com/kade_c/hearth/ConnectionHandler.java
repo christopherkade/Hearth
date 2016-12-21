@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.kade_c.hearth;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;

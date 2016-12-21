@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.kade_c.hearth;
 
 import android.content.Intent;
 import android.os.Bundle;

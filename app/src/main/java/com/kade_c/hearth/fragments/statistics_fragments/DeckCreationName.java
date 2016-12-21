@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth.fragments.statistics_fragments;
+package com.kade_c.hearth.fragments.statistics_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.kade_c.hearth.MainActivity;
-import com.example.kade_c.hearth.R;
+import com.kade_c.hearth.MainActivity;
+import com.kade_c.hearth.R;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

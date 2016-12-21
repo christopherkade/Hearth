@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth;
+package com.kade_c.hearth;
 
 /**
  * Interface for locking the Navigation Drawer's access in certain Fragments.

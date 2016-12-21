@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth.fragments.statistics_fragments;
+package com.kade_c.hearth.fragments.statistics_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import com.example.kade_c.hearth.MainActivity;
-import com.example.kade_c.hearth.R;
+import com.kade_c.hearth.MainActivity;
+import com.kade_c.hearth.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +49,6 @@ public class DeckStatistics extends Fragment {
         view =  inflater.inflate(R.layout.statistics_deck, container, false);
 
         DLFM = new InternalFilesManager(getContext(), getActivity()). new DeckListFileManager();
-
 
         // Sets the Drawer as enabled.
         ((MainActivity) getActivity()).setDrawerEnabled(true);
@@ -131,7 +130,7 @@ public class DeckStatistics extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (deletion == true) {
+                if (deletion) {
                     deletion = false;
                     String fileToDelete = deckClasses[position] + " | " + deckNames[position];
                     lines = DLFM.deleteDeckFromList(fileToDelete, position);

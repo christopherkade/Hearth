@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth.fragments.statistics_fragments;
+package com.kade_c.hearth.fragments.statistics_fragments;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 public class InternalFilesManager {
 
-    Context context;
-    FragmentActivity fActivity;
+    private Context context;
+    private FragmentActivity fActivity;
 
     // Name of the file containing the decks created by the user.
     private final String DECK_LIST_FILE = "Deck_Info";
@@ -28,6 +28,9 @@ public class InternalFilesManager {
         fActivity = activity;
     }
 
+    /**
+     * Handles reading / writing of the deck list file.
+     */
     public class DeckListFileManager {
         /**
          * Reads from our deck list file and saves every line in
@@ -126,6 +129,9 @@ public class InternalFilesManager {
         }
     }
 
+    /**
+     * Handles reading / writing of Deck-specific files.
+     */
     public class DeckFileManager {
 
         protected ArrayList<String> getDeckFileInformation(String deckClass, String deckName) {

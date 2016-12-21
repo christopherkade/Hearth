@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth.fragments.statistics_fragments;
+package com.kade_c.hearth.fragments.statistics_fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kade_c.hearth.R;
+import com.kade_c.hearth.R;
 
 /**
  * TODO: Should handle general statistics about the user.

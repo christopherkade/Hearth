@@ -1,4 +1,4 @@
-package com.example.kade_c.hearth.fragments.statistics_fragments;
+package com.kade_c.hearth.fragments.statistics_fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kade_c.hearth.MainActivity;
-import com.example.kade_c.hearth.R;
+import com.kade_c.hearth.MainActivity;
+import com.kade_c.hearth.R;
 
 import java.util.ArrayList;
 

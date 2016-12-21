@@ -1,6 +1,5 @@
-package com.example.kade_c.hearth.fragments.statistics_fragments;
+package com.kade_c.hearth.fragments.statistics_fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.kade_c.hearth.MainActivity;
-import com.example.kade_c.hearth.R;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.kade_c.hearth.MainActivity;
+import com.kade_c.hearth.R;
 
 /**
  * Handles the Victory / Defeat adding.
