@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,6 +33,42 @@ public class InternalFilesManager {
      * Handles reading / writing of the deck list file.
      */
     public class DeckListFileManager {
+        /**
+         * Returns true if the deck passed as parameter has already been used for a certain class.
+         */
+        public boolean checkDuplicateName(String name) {
+            File file = context.getFileStreamPath(DECK_LIST_FILE);
+            byte[] buffer = new byte[4096];
+            String line = "";
+            int ret;
+            char c;
+
+            if (file != null && file.exists()) {
+                try {
+                    FileInputStream fos = fActivity.openFileInput(DECK_LIST_FILE);
+
+                    int i = 0;
+                    for (ret = fos.read(buffer); ret > 0; ret--) {
+                        c = (char) buffer[i];
+                        line += c;
+
+                        if (c == '\n') {
+                            String deckName = line.split(" \\| ")[1];
+                            if (deckName.equals(name)) {
+                                return true;
+                            }
+                            line = "";
+                        }
+                        i++;
+                    }
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return false;
+        }
+
         /**
          * Reads from our deck list file and saves every line in
          * an ArrayList

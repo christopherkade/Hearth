@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.kade_c.hearth.InternalFilesManager;
 import com.kade_c.hearth.MainActivity;
 import com.kade_c.hearth.R;
 
@@ -25,10 +27,8 @@ public class DeckCreationName extends Fragment {
 
     View view;
 
-    private String FILENAME = "Deck_Info";
-
     // Name inputted.
-    private String name;
+    private String name = "";
 
     // Class selected in the previous Fragment.
     private String classSelected;
@@ -54,9 +54,8 @@ public class DeckCreationName extends Fragment {
                 // Get the inputted name as a String
                 name = nameInputted.getText().toString();
 
-                createDeck();
-
-                callDeckFragment();
+                // Checks input and acts accordingly.
+                handleDeckCreation();
             }
         });
 
@@ -67,6 +66,30 @@ public class DeckCreationName extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Deck Creation - Name");
+    }
+
+    /**
+     * If name inputted is valid, create deck, otherwise warn the user.
+     */
+    private void handleDeckCreation() {
+        if (name.isEmpty()) {
+            Toast.makeText(getContext().getApplicationContext(),
+                    "Please input a name", Toast.LENGTH_LONG)
+                    .show();
+        } else {
+            InternalFilesManager.DeckListFileManager DLFM = new InternalFilesManager(getContext(), getActivity()).new DeckListFileManager();
+
+            // Checks if the name inputted is a duplicate.
+            if (DLFM.checkDuplicateName(name)) {
+                Toast.makeText(getContext().getApplicationContext(),
+                        "Name taken", Toast.LENGTH_LONG)
+                        .show();
+            } else {
+                // Deck name is valid, write in file.
+                createDeck();
+                callDeckFragment();
+            }
+        }
     }
 
     /**
@@ -88,6 +111,9 @@ public class DeckCreationName extends Fragment {
         String deckInfo = classSelected + " | " + name;
 
         try {
+            // Name of the file containing our deck list.
+            String FILENAME = "Deck_Info";
+
             FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_APPEND);
             fos.write(deckInfo.getBytes());
             fos.write('\n');
