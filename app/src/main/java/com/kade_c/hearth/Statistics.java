@@ -16,8 +16,8 @@ public class Statistics {
     private HashMap<String, Integer> winPerClass = new HashMap<>();
     private HashMap<String, Integer> lossPerClass = new HashMap<>();
 
-    // TODO: Work on displaying the players most played deck.
-    private String favoriteDeck = null;
+    private String favoriteDeck = "None";
+    private String mostSuccessfulDeck = "None";
 
     /**
      * Calculates the victory percentage with the parameters.
@@ -83,6 +83,14 @@ public class Statistics {
         this.activeDecksNumber = activeDecksNumber;
     }
 
+    public void setFavoriteDeck(String favoriteDeck) {
+        this.favoriteDeck = favoriteDeck;
+    }
+
+    public void setMostSuccessfulDeck(String mostSuccessfulDeck) {
+        this.mostSuccessfulDeck = mostSuccessfulDeck;
+    }
+
     // GETTERS
     public int getGamesPlayed() {
         return gamesPlayed;
@@ -102,6 +110,14 @@ public class Statistics {
 
     public int getActiveDecksNumber() {
         return activeDecksNumber;
+    }
+
+    public String getFavoriteDeck() {
+        return favoriteDeck;
+    }
+
+    public String getMostSuccessfulDeck() {
+        return mostSuccessfulDeck;
     }
 }
 

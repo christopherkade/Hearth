@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kade_c.hearth.InternalFilesManager;
@@ -29,6 +30,11 @@ public class GeneralStatistics extends Fragment {
     private int totalGames = 0;
     private int totalVictories = 0;
     private int totalDefeats = 0;
+    private String favoriteDeck = "None";
+    private String favoriteDeckClass = "";
+    private String mostSuccessDeck = "None";
+    private String mostSuccessDeckClass = "";
+
 
     // Handles the saving / calculating of our statistics.
     private Statistics statistics;
@@ -76,64 +82,112 @@ public class GeneralStatistics extends Fragment {
         for (String deck : deckList) {
             deckStats.add(DFM.readStatisticsFile(deck));
         }
-        determineGameValues(deckStats);
+        determineStatValues(deckStats);
     }
 
     /**
      * Determines the total number of games played, won and lost for
      * every deck available.
      */
-    private void determineGameValues(List<List<String>> deckStatsList) {
+    private void determineStatValues(List<List<String>> deckStatsList) {
+        int gamesPlayed = 0;
+        int lastDeckGamesPlayed = 0;
+        int deckVictories = 0;
+        int lastDeckVictories = 0;
         statistics = new Statistics();
 
         if (deckStatsList.size() != 0) {
             // Goes through every deck.
-            for (List<String> deckStat : deckStatsList) {
-                if (deckStat.size() != 0) {
+            for (List<String> deck : deckStatsList) {
+                if (deck.size() != 0) {
 
                     // Goes through every line of every deck stat file.
-                    for (int i = 1; i < deckStat.size(); i++) {
-                        String line = deckStat.get(i);
+                    for (int i = 1; i < deck.size(); i++) {
+                        String line = deck.get(i);
                         String opponentClass = line.split(" ")[1];
 
                         // Register victory or defeat.
                         if (line.charAt(0) == 'V') {
+                            deckVictories++;
                             totalVictories++;
                             statistics.setClassSpecificVictory(opponentClass);
                         } else if (line.charAt(0) == 'D') {
                             totalDefeats++;
                             statistics.setClassSpecificDefeat(opponentClass);
                         }
+                        if (deckVictories > lastDeckVictories) {
+                            String[] successDeckSplit = deck.get(0).split(" \\| ");
+                            mostSuccessDeckClass = successDeckSplit[0];
+                            mostSuccessDeck = successDeckSplit[1];
+                        }
+                        lastDeckVictories = deckVictories;
+                        gamesPlayed++;
                     }
+                    if (gamesPlayed > lastDeckGamesPlayed) {
+                        String[] favDeckSplit = deck.get(0).split(" \\| ");
+                        favoriteDeckClass = favDeckSplit[0];
+                        favoriteDeck = favDeckSplit[1];
+
+                    }
+                    lastDeckGamesPlayed = gamesPlayed;
                 }
+            }
+            if (favoriteDeck == null) {
+                favoriteDeck = "None";
+            }
+            if (mostSuccessDeck == null) {
+                mostSuccessDeck = "None";
             }
             totalGames = totalVictories + totalDefeats;
 
-            // Save the statistics in our Statistics object.
-            statistics.calculateVictoryPercentage(totalGames, totalVictories);
-            statistics.setGamesPlayed(totalGames);
-            statistics.setGamesWon(totalVictories);
-            statistics.setGamesLost(totalDefeats);
-            statistics.setActiveDecksNumber(deckList.size());
+            saveStatValues();
         }
 
-        setGameValues();
+        setStatValues();
+    }
+
+    /**
+     * Saves statistics values in our Statistics object.
+     */
+    private void saveStatValues() {
+        statistics.calculateVictoryPercentage(totalGames, totalVictories);
+        statistics.setGamesPlayed(totalGames);
+        statistics.setGamesWon(totalVictories);
+        statistics.setGamesLost(totalDefeats);
+        statistics.setActiveDecksNumber(deckList.size());
+        statistics.setFavoriteDeck(favoriteDeck);
+        statistics.setMostSuccessfulDeck(mostSuccessDeck);
     }
 
     /**
      * Sets textual values on our View.
      */
-    private void setGameValues() {
+    private void setStatValues() {
         TextView totalPercentageWin = (TextView) view.findViewById(R.id.total_victory_percentage_value);
         TextView totalGames = (TextView) view.findViewById(R.id.total_games_played_value);
         TextView totalGamesWon = (TextView) view.findViewById(R.id.total_games_won_value);
         TextView totalGamesLost = (TextView) view.findViewById(R.id.total_games_lost_value);
         TextView totalDecks = (TextView) view.findViewById(R.id.total_active_decks_value);
+        TextView favoriteDeck = (TextView) view.findViewById(R.id.favorite_deck_value);
+        TextView successDeck = (TextView) view.findViewById(R.id.most_success_deck_value);
+        ImageView favDeckIcon = (ImageView) view.findViewById(R.id.most_played_deck_icon);
+        ImageView successDeckIcon = (ImageView) view.findViewById(R.id.most_success_deck_icon);
 
         totalPercentageWin.setText(statistics.getPercentageWin().toString() + "%");
         totalGames.setText(String.valueOf(statistics.getGamesPlayed()));
         totalGamesWon.setText(String.valueOf(statistics.getGamesWon()));
         totalGamesLost.setText(String.valueOf(statistics.getGamesLost()));
         totalDecks.setText(String.valueOf(statistics.getActiveDecksNumber()));
+        favoriteDeck.setText(String.valueOf(statistics.getFavoriteDeck()));
+        successDeck.setText(String.valueOf(statistics.getMostSuccessfulDeck()));
+
+        if (!favoriteDeckClass.equals("")) {
+            int resourceIdFav = getActivity().getResources().getIdentifier(favoriteDeckClass.toLowerCase(), "mipmap", getActivity().getPackageName());
+            favDeckIcon.setImageResource(resourceIdFav);
+        }
+        if (!mostSuccessDeckClass.equals("")) {
+            int resourceIdSuccess = getActivity().getResources().getIdentifier(mostSuccessDeckClass.toLowerCase(), "mipmap", getActivity().getPackageName());
+            successDeckIcon.setImageResource(resourceIdSuccess);
+        }
     }
 }
