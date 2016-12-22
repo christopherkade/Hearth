@@ -86,13 +86,11 @@ public class GeneralStatistics extends Fragment {
     }
 
     /**
-     * Determines the total number of games played, won and lost for
-     * every deck available.
+     * Determines the total number of games played, won, and lost,
+     * aswell as the most played deck and the most successful one.
      */
     private void determineStatValues(List<List<String>> deckStatsList) {
-        int gamesPlayed = 0;
         int lastDeckGamesPlayed = 0;
-        int deckVictories = 0;
         int lastDeckVictories = 0;
         statistics = new Statistics();
 
@@ -100,6 +98,8 @@ public class GeneralStatistics extends Fragment {
             // Goes through every deck.
             for (List<String> deck : deckStatsList) {
                 if (deck.size() != 0) {
+                    int gamesPlayed = 0;
+                    int deckVictories = 0;
 
                     // Goes through every line of every deck stat file.
                     for (int i = 1; i < deck.size(); i++) {
@@ -115,20 +115,19 @@ public class GeneralStatistics extends Fragment {
                             totalDefeats++;
                             statistics.setClassSpecificDefeat(opponentClass);
                         }
-                        if (deckVictories > lastDeckVictories) {
-                            String[] successDeckSplit = deck.get(0).split(" \\| ");
-                            mostSuccessDeckClass = successDeckSplit[0];
-                            mostSuccessDeck = successDeckSplit[1];
-                        }
-                        lastDeckVictories = deckVictories;
                         gamesPlayed++;
+                    }
+                    if (deckVictories > lastDeckVictories) {
+                        String[] successDeckSplit = deck.get(0).split(" \\| ");
+                        mostSuccessDeckClass = successDeckSplit[0];
+                        mostSuccessDeck = successDeckSplit[1];
                     }
                     if (gamesPlayed > lastDeckGamesPlayed) {
                         String[] favDeckSplit = deck.get(0).split(" \\| ");
                         favoriteDeckClass = favDeckSplit[0];
                         favoriteDeck = favDeckSplit[1];
-
                     }
+                    lastDeckVictories = deckVictories;
                     lastDeckGamesPlayed = gamesPlayed;
                 }
             }
