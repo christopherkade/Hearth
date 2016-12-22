@@ -1,39 +1,57 @@
 <resources>
     <string name="app_name">Hearth</string>
 
+    <!-- Main Activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Home -->
+    <string name="general_menu_title">General</string>
+    <string name="homeTab">Home</string>
     <string name="welcome_text">Welcome to Hearth !</string>
     <string name="welcome_text2">Hearthstone Companion App</string>
     <string name="xpac_text">Latest expansion</string>
     <string name="patch_text">Current patch</string>
+
+    <!-- Search Card -->
+    <string name="searchTab">Search Card</string>
     <string name="searchField_text">Card name</string>
     <string name="search_button">Search</string>
-    <string name="type_text">Type</string>
     <string name="card_not_found_text">Card Not Found</string>
-    <string name="cost_text">Cost</string>
-    <string name="developedBy_text">Developed By</string>
-    <string name="developerName_text">Christopher Kadé</string>
-    <string name="email_text">E-mail</string>
-    <string name="email_value">c.kade96@gmail.com</string>
 
-    <!-- Tab name strings -->
-    <string name="homeTab">Home</string>
+    <!-- Card Displayer -->
     <string name="cardDisplayerTab">Card Displayer</string>
-    <string name="searchTab">Search Card</string>
+    <string name="cost_text">Cost</string>
+    <string name="type_text">Type</string>
+
+    <!-- General Statistics -->
+    <string name="statistics_menu_title">Statistics</string>
     <string name="statisticsTab">Statistics</string>
     <string name="statisticsGeneralTab">General Stats</string>
+    <string name="total_victory_percentage_text">Total victory percentage</string>
+    <string name="total_victory_percentage_value">0%</string>
+    <string name="total_active_decks_value">active decks</string>
+    <string name="total_active_decks_default_value">0</string>
+    <string name="total_games_text">games played</string>
+    <string name="games_won_text">won</string>
+    <string name="game_lost_text">lost</string>
+    <string name="favorite_deck_text">Most played:</string>
+    <string name="favorite_deck_value">None</string>
+    <string name="most_success_deck_text">Most successful:</string>
+    <string name="most_success_deck_value">None</string>
+
+    <!-- Deck Statistics -->
     <string name="statisticsDeckTab">Deck Stats</string>
-    <string name="aboutTab">About</string>
-    <string name="statistics_menu_title">Statistics</string>
-    <string name="general_menu_title">General</string>
     <string name="myDecks_text">My Decks</string>
     <string name="newDeck_button">+</string>
-    <string name="selectClass_text">Select a class</string>
-    <string name="selectName_text">Select a name</string>
     <string name="deleteDeck_button">-</string>
+    <!-- Deck Statistics CLASS -->
+    <string name="selectClass_text">Select a class</string>
+    <!-- Deck Statistics NAME -->
+    <string name="selectName_text">Select a name</string>
     <string name="deckName_hint">e.g: Aggro</string>
     <string name="deckName_button">Create</string>
+    <!-- Selected Deck Statistics -->
     <string name="default_deckName">Unknown</string>
     <string name="add_victory_button">Add Victory</string>
     <string name="add_defeat_button">Add Defeat</string>
@@ -41,14 +59,15 @@
     <string name="default_victory_percentage">0%</string>
     <string name="victory_class_select_text">Won against...</string>
     <string name="defeat_class_select_text">Lost against...</string>
-    <string name="total_games_text">games played</string>
-    <string name="games_won_text">won</string>
-    <string name="game_lost_text">lost</string>
-    <string name="total_victory_percentage_text">Total victory percentage</string>
-    <string name="total_victory_percentage_value">0%</string>
-    <string name="total_active_decks_value">active decks</string>
-    <string name="total_active_decks_default_value">0</string>
 
+    <!-- About -->
+    <string name="aboutTab">About</string>
+    <string name="developedBy_text">Developed By</string>
+    <string name="developerName_text">Christopher Kadé</string>
+    <string name="email_text">E-mail</string>
+    <string name="email_value">c.kade96@gmail.com</string>
+
+    <!-- Card displayer card type spinner values -->
     <string-array name="type_array">
         <item>None</item>
         <item>Common</item>
@@ -63,6 +82,7 @@
         <item>Rogue</item>
     </string-array>
 
+    <!-- Card displayer card cost spinner values -->
     <string-array name="cost_array">
         <item>All</item>
         <item>0</item>
