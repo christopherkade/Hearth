@@ -39,6 +39,9 @@
     <string name="favorite_deck_value">None</string>
     <string name="most_success_deck_text">Most successful:</string>
     <string name="most_success_deck_value">None</string>
+    <string name="total_games_lost_default_value">0</string>
+    <string name="total_games_played_default_value">0</string>
+    <string name="total_games_won_default_value">0</string>
 
     <!-- Deck Statistics -->
     <string name="statisticsDeckTab">Deck Stats</string>
@@ -57,8 +60,8 @@
     <string name="add_defeat_button">Add Defeat</string>
     <string name="victory_text">Victory percentage</string>
     <string name="default_victory_percentage">0%</string>
-    <string name="victory_class_select_text">Won against...</string>
-    <string name="defeat_class_select_text">Lost against...</string>
+    <string name="victory_class_select_text">Won against…</string>
+    <string name="defeat_class_select_text">Lost against…</string>
 
     <!-- About -->
     <string name="aboutTab">About</string>
@@ -66,6 +69,15 @@
     <string name="developerName_text">Christopher Kadé</string>
     <string name="email_text">E-mail</string>
     <string name="email_value">c.kade96@gmail.com</string>
+    <string name="shaman_class_icon">Shaman class-icon</string>
+    <string name="warlock_class_icon">Warlock class-icon</string>
+    <string name="warrior_class_icon">Warrior class-icon</string>
+    <string name="paladin_class_icon">Paladin class-icon</string>
+    <string name="hunter_class_icon">Hunter class-icon</string>
+    <string name="druid_class_icon">Druid class-icon</string>
+    <string name="mage_class_icon">Mage class-icon</string>
+    <string name="priest_class_icon">Priest class-icon</string>
+    <string name="rogue_class_icon">Rogue class-icon</string>
 
     <!-- Card displayer card type spinner values -->
     <string-array name="type_array">

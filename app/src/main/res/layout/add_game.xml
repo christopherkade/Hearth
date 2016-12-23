@@ -16,7 +16,7 @@
 
         <TextView
             android:text="@string/victory_class_select_text"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/selectClass_text"
@@ -31,7 +31,8 @@
             android:layout_below="@+id/warrior_button"
             android:layout_alignLeft="@+id/warrior_button"
             android:layout_alignStart="@+id/warrior_button"
-            android:layout_marginTop="28dp" />
+            android:layout_marginTop="28dp"
+            android:contentDescription="@string/shaman_class_icon" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -40,7 +41,8 @@
             android:id="@+id/warlock_button"
             android:layout_alignTop="@+id/druid_button"
             android:layout_alignLeft="@+id/paladin_button"
-            android:layout_alignStart="@+id/paladin_button" />
+            android:layout_alignStart="@+id/paladin_button"
+            android:contentDescription="@string/warlock_class_icon" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -49,7 +51,8 @@
             android:id="@+id/warrior_button"
             android:layout_alignTop="@+id/druid_button"
             android:layout_alignLeft="@+id/mage_button"
-            android:layout_alignStart="@+id/mage_button" />
+            android:layout_alignStart="@+id/mage_button"
+            android:contentDescription="@string/warrior_class_icon" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -58,7 +61,8 @@
             android:id="@+id/paladin_button"
             android:layout_alignTop="@+id/hunter_button"
             android:layout_alignRight="@+id/selectClass_text"
-            android:layout_alignEnd="@+id/selectClass_text" />
+            android:layout_alignEnd="@+id/selectClass_text"
+            android:contentDescription="@string/paladin_class_icon"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -66,7 +70,8 @@
             app:srcCompat="@mipmap/hunter"
             android:id="@+id/hunter_button"
             android:layout_alignTop="@+id/mage_button"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/hunter_class_icon" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -75,7 +80,8 @@
             android:layout_marginTop="33dp"
             android:id="@+id/druid_button"
             android:layout_below="@+id/hunter_button"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/druid_class_icon"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -85,7 +91,8 @@
             app:srcCompat="@mipmap/mage"
             android:layout_below="@+id/selectClass_text"
             android:layout_alignLeft="@+id/selectClass_text"
-            android:layout_alignStart="@+id/selectClass_text" />
+            android:layout_alignStart="@+id/selectClass_text"
+            android:contentDescription="@string/mage_class_icon" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -93,7 +100,8 @@
             app:srcCompat="@mipmap/priest"
             android:id="@+id/priest_button"
             android:layout_alignTop="@+id/shaman_button"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/priest_class_icon" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -102,97 +110,72 @@
             android:layout_alignTop="@+id/priest_button"
             android:layout_alignLeft="@+id/warlock_button"
             android:layout_alignStart="@+id/warlock_button"
-            android:id="@+id/rogue_button" />
+            android:id="@+id/rogue_button"
+            android:contentDescription="@string/rogue_class_icon" />
 
     </RelativeLayout>
 
     <TextView
         android:text="@string/selectClass_text"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/textView" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/shaman"
         android:id="@+id/imageView2"
-        android:layout_below="@+id/warrior_button"
-        android:layout_alignLeft="@+id/warrior_button"
-        android:layout_alignStart="@+id/warrior_button"
         android:layout_marginTop="28dp" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/warlock"
-        android:id="@+id/imageView3"
-        android:layout_alignTop="@+id/druid_button"
-        android:layout_alignLeft="@+id/paladin_button"
-        android:layout_alignStart="@+id/paladin_button" />
+        android:id="@+id/imageView3" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/warrior"
-        android:id="@+id/imageView4"
-        android:layout_alignTop="@+id/druid_button"
-        android:layout_alignLeft="@+id/mage_button"
-        android:layout_alignStart="@+id/mage_button" />
+        android:id="@+id/imageView4" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/paladin"
-        android:id="@+id/imageView5"
-        android:layout_alignTop="@+id/hunter_button"
-        android:layout_alignRight="@+id/selectClass_text"
-        android:layout_alignEnd="@+id/selectClass_text" />
+        android:id="@+id/imageView5" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/hunter"
-        android:id="@+id/imageView6"
-        android:layout_alignTop="@+id/mage_button"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/imageView6" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/druid"
         android:layout_marginTop="33dp"
-        android:id="@+id/imageView7"
-        android:layout_below="@+id/hunter_button"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/imageView7" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:id="@+id/imageView8"
-        app:srcCompat="@mipmap/mage"
-        android:layout_below="@+id/selectClass_text"
-        android:layout_alignLeft="@+id/selectClass_text"
-        android:layout_alignStart="@+id/selectClass_text" />
+        app:srcCompat="@mipmap/mage" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/priest"
-        android:id="@+id/imageView9"
-        android:layout_alignTop="@+id/shaman_button"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/imageView9" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/rogue"
-        android:layout_alignTop="@+id/priest_button"
-        android:layout_alignLeft="@+id/warlock_button"
-        android:layout_alignStart="@+id/warlock_button"
         android:id="@+id/imageView10" />
 </LinearLayout>
