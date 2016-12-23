@@ -54,7 +54,7 @@ public class InternalFilesManager {
 
                         if (c == '\n') {
                             String deckName = line.split(" \\| ")[1];
-                            if (deckName.equals(name)) {
+                            if (deckName.equals(name + "\n")) {
                                 return true;
                             }
                             line = "";
@@ -109,7 +109,6 @@ public class InternalFilesManager {
 
         /**
          * Deletes the line passed as parameter from the decks list file.
-         * @param lineToDelete
          */
         private void deleteDeckFromFile(int lineToDelete) {
             try {
