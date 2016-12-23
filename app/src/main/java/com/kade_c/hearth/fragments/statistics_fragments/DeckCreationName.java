@@ -54,8 +54,11 @@ public class DeckCreationName extends Fragment {
                 // Get the inputted name as a String
                 name = nameInputted.getText().toString();
 
-                // Checks input and acts accordingly.
-                handleDeckCreation();
+                // If input is valid, create deck.
+                if (checkInput()) {
+                    createDeck();
+                    callDeckFragment();
+                }
             }
         });
 
@@ -69,27 +72,36 @@ public class DeckCreationName extends Fragment {
     }
 
     /**
-     * If name inputted is valid, create deck, otherwise warn the user.
+     * Returns false if input is invalid:
+     * Empty, duplicate or non-alphanumerical.
      */
-    private void handleDeckCreation() {
+    private boolean checkInput() {
         if (name.isEmpty()) {
             Toast.makeText(getContext().getApplicationContext(),
                     "Please input a name", Toast.LENGTH_LONG)
                     .show();
+            return false;
         } else {
             InternalFilesManager.DeckListFileManager DLFM = new InternalFilesManager(getContext(), getActivity()).new DeckListFileManager();
 
-            // Checks if the name inputted is a duplicate.
+            // Checks if duplicate.
             if (DLFM.checkDuplicateName(name)) {
                 Toast.makeText(getContext().getApplicationContext(),
                         "Name taken", Toast.LENGTH_LONG)
                         .show();
-            } else {
-                // Deck name is valid, write in file.
-                createDeck();
-                callDeckFragment();
+                return false;
+            }
+
+            // Checks if non-alphanumerical.
+            String pattern = "[a-zA-Z0-9]+";
+            if (!name.matches(pattern)) {
+                Toast.makeText(getContext().getApplicationContext(),
+                        "Invalid name", Toast.LENGTH_LONG)
+                        .show();
+                return false;
             }
         }
+        return true;
     }
 
     /**
