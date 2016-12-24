@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles the Slide View for our General Statistics page
+ * Handles the Slide View for our General Statistics page.
  */
 public class GeneralStatisticsVP extends Fragment {
 
@@ -36,6 +36,9 @@ public class GeneralStatisticsVP extends Fragment {
         return view;
     }
 
+    /**
+     * Creates and sets our slides in our ViewPager.
+     */
     private void createViewPager(ViewPager viewPager) {
         Log.d("activity", "viewpager");
         mStatisticsPagerAdapter = new StatisticsPagerAdapter(getActivity().getSupportFragmentManager());
@@ -45,6 +48,9 @@ public class GeneralStatisticsVP extends Fragment {
         viewPager.setAdapter(mStatisticsPagerAdapter);
     }
 
+    /**
+     * Our ViewPager adapter, handles the change of pages.
+     */
     public class StatisticsPagerAdapter extends FragmentStatePagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();

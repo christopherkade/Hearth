@@ -16,6 +16,10 @@ import com.kade_c.hearth.Statistics;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * First slide of our ViewPager.
+ * Displays the players general statistics.
+ */
 public class GeneralStatistics extends Fragment {
 
     View view;

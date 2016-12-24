@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 
 import com.kade_c.hearth.R;
 
-
+/**
+ * Should display various graphics of user deck / game progressions.
+ */
 public class GeneralStatisticsGraph extends Fragment {
 
     View view;
