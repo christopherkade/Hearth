@@ -93,7 +93,7 @@ public class DeckCreationName extends Fragment {
             }
 
             // Checks if non-alphanumerical.
-            String pattern = "[a-zA-Z0-9]+";
+            String pattern = "[a-zA-Z0-9 ]+";
             if (!name.matches(pattern)) {
                 Toast.makeText(getContext().getApplicationContext(),
                         "Invalid name", Toast.LENGTH_LONG)
