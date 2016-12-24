@@ -3,7 +3,6 @@ package com.kade_c.hearth;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,12 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.kade_c.hearth.fragments.About;
 import com.kade_c.hearth.fragments.CardDisplayer;
 import com.kade_c.hearth.fragments.statistics_fragments.DeckStatistics;
-import com.kade_c.hearth.fragments.statistics_fragments.GeneralStatistics;
+import com.kade_c.hearth.fragments.statistics_fragments.GeneralStatisticsVP;
 import com.kade_c.hearth.fragments.Home;
 import com.kade_c.hearth.fragments.SearchCard;
 
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //drawer.setDrawerListener(toggle);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -121,7 +118,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             // STATS GENERAL
             case R.id.nav_stat_general:
-                fragment = new GeneralStatistics();
+                fragment = new GeneralStatisticsVP();
+//                fragment = new GeneralStatistics();
+//                startActivity(new Intent(this, GeneralStatisticsVP.class));
+//                fragment = null;
                 break;
             // STATS DECK
             case R.id.nav_stat_deck:
@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
         fragment = checkFragmentState(itemId);
 
-        this.replaceFragment(fragment);
+        if (fragment != null)
+            this.replaceFragment(fragment);
     }
 
     /**

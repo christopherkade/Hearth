@@ -16,15 +16,10 @@ import com.kade_c.hearth.Statistics;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Handles general statistics about the user.
- * Number of decks, number of games played etc.
- */
 public class GeneralStatistics extends Fragment {
 
     View view;
 
-    // List of all the decks created.
     private ArrayList<String> deckList;
 
     private int totalGames = 0;
@@ -39,11 +34,13 @@ public class GeneralStatistics extends Fragment {
     // Handles the saving / calculating of our statistics.
     private Statistics statistics;
 
+
+    public static final String ARG_OBJECT = "object";
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.statistics_general, container, false);
-
         saveDeckList();
         saveTotalDeckStatistics();
 
@@ -53,7 +50,7 @@ public class GeneralStatistics extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("General Statistics");
+        getActivity().setTitle("General");
     }
 
     /**
@@ -117,16 +114,9 @@ public class GeneralStatistics extends Fragment {
                         }
                         gamesPlayed++;
                     }
-                    if (deckVictories > lastDeckVictories) {
-                        String[] successDeckSplit = deck.get(0).split(" \\| ");
-                        mostSuccessDeckClass = successDeckSplit[0];
-                        mostSuccessDeck = successDeckSplit[1];
-                    }
-                    if (gamesPlayed > lastDeckGamesPlayed) {
-                        String[] favDeckSplit = deck.get(0).split(" \\| ");
-                        favoriteDeckClass = favDeckSplit[0];
-                        favoriteDeck = favDeckSplit[1];
-                    }
+                    determineSuccessfulDeck(deck.get(0), deckVictories, lastDeckVictories);
+                    determineFavoriteDeck(deck.get(0), gamesPlayed, lastDeckGamesPlayed);
+
                     lastDeckVictories = deckVictories;
                     lastDeckGamesPlayed = gamesPlayed;
                 }
@@ -143,6 +133,28 @@ public class GeneralStatistics extends Fragment {
         }
 
         setStatValues();
+    }
+
+    /**
+     * Sets the players favorite deck (most played).
+     */
+    private void determineFavoriteDeck(String deckName, int gamesPlayed, int lastDeckGamesPlayed) {
+        if (gamesPlayed > lastDeckGamesPlayed) {
+            String[] favDeckSplit = deckName.split(" \\| ");
+            favoriteDeckClass = favDeckSplit[0];
+            favoriteDeck = favDeckSplit[1];
+        }
+    }
+
+    /**
+     * Sets the players most successful deck (most victories).
+     */
+    private void determineSuccessfulDeck(String deckName, int deckVictories, int lastDeckVictories) {
+        if (deckVictories > lastDeckVictories) {
+            String[] successDeckSplit = deckName.split(" \\| ");
+            mostSuccessDeckClass = successDeckSplit[0];
+            mostSuccessDeck = successDeckSplit[1];
+        }
     }
 
     /**
@@ -189,4 +201,5 @@ public class GeneralStatistics extends Fragment {
             successDeckIcon.setImageResource(resourceIdSuccess);
         }
     }
+
 }

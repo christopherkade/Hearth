@@ -161,7 +161,7 @@
         android:layout_alignTop="@+id/most_played_deck_icon"
         android:layout_alignLeft="@+id/most_success_deck_text"
         android:layout_alignStart="@+id/most_success_deck_text" />
-    
+
     <TextView
         android:id="@+id/most_success_deck_value"
         android:text="@string/most_success_deck_value"
