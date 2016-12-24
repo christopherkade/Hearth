@@ -110,16 +110,6 @@
         android:layout_alignLeft="@+id/total_games_played_text"
         android:layout_alignStart="@+id/total_games_played_text" />
 
-    <TextView
-        android:id="@+id/favorite_deck_text"
-        android:text="@string/favorite_deck_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <ImageView
         android:id="@+id/most_played_deck_icon"
         android:layout_width="wrap_content"
@@ -129,29 +119,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp" />
-
-    <TextView
-        android:id="@+id/favorite_deck_value"
-        android:text="@string/favorite_deck_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/mainColor"
-        android:layout_toEndOf="@id/most_played_deck_icon"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/most_played_deck_icon"
-        android:layout_marginTop="20dp"/>
-
-    <TextView
-        android:id="@+id/most_success_deck_text"
-        android:text="@string/most_success_deck_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/favorite_deck_text"
-        android:layout_alignBottom="@+id/favorite_deck_text"
-        android:layout_toRightOf="@+id/total_active_decks_text"
-        android:layout_toEndOf="@+id/total_active_decks_text"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp" />
 
     <ImageView
         android:id="@+id/most_success_deck_icon"
@@ -163,13 +130,43 @@
         android:layout_alignStart="@+id/most_success_deck_text" />
 
     <TextView
+        android:id="@+id/favorite_deck_value"
+        android:text="@string/favorite_deck_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mainColor"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/most_played_deck_icon"
+        android:layout_toEndOf="@+id/most_played_deck_icon"
+        android:layout_marginBottom="13dp" />
+
+    <TextView
         android:id="@+id/most_success_deck_value"
         android:text="@string/most_success_deck_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/mainColor"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBaseline="@+id/favorite_deck_value"
+        android:layout_alignBottom="@+id/favorite_deck_value"
         android:layout_toRightOf="@+id/most_success_deck_icon"
-        android:layout_marginTop="20dp"/>
+        android:layout_toEndOf="@+id/most_success_deck_icon" />
+
+    <TextView
+        android:id="@+id/favorite_deck_text"
+        android:text="@string/favorite_deck_text"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/favorite_deck_value"
+        android:layout_alignRight="@+id/favorite_deck_value"
+        android:layout_alignEnd="@+id/favorite_deck_value" />
+
+    <TextView
+        android:id="@+id/most_success_deck_text"
+        android:text="@string/most_success_deck_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/favorite_deck_text"
+        android:layout_toRightOf="@+id/total_active_decks_text" />
 
 </RelativeLayout>
