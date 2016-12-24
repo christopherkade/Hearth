@@ -62,13 +62,7 @@
     <string name="default_victory_percentage">0%</string>
     <string name="victory_class_select_text">Won against…</string>
     <string name="defeat_class_select_text">Lost against…</string>
-
-    <!-- About -->
-    <string name="aboutTab">About</string>
-    <string name="developedBy_text">Developed By</string>
-    <string name="developerName_text">Christopher Kadé</string>
-    <string name="email_text">E-mail</string>
-    <string name="email_value">c.kade96@gmail.com</string>
+    <!-- Class icon text-values -->
     <string name="shaman_class_icon">Shaman class-icon</string>
     <string name="warlock_class_icon">Warlock class-icon</string>
     <string name="warrior_class_icon">Warrior class-icon</string>
@@ -78,6 +72,13 @@
     <string name="mage_class_icon">Mage class-icon</string>
     <string name="priest_class_icon">Priest class-icon</string>
     <string name="rogue_class_icon">Rogue class-icon</string>
+
+    <!-- About -->
+    <string name="aboutTab">About</string>
+    <string name="developedBy_text">Developed By</string>
+    <string name="developerName_text">Christopher Kadé</string>
+    <string name="email_text">E-mail</string>
+    <string name="email_value">c.kade96@gmail.com</string>
 
     <!-- Card displayer card type spinner values -->
     <string-array name="type_array">
