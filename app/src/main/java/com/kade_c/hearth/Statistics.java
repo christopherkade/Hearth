@@ -40,6 +40,11 @@ public class Statistics {
     private String mostSuccessDeck = "None";
     private String mostSuccessDeckClass = "";
 
+    private String[] classes = {"Mage", "Hunter", "Paladin",
+            "Warrior", "Druid", "Warlock",
+            "Shaman", "Priest", "Rogue",
+            null};
+
     public Statistics() {}
 
     /**
@@ -150,9 +155,19 @@ public class Statistics {
     }
 
     /**
+     * Initializes our winPerClass map.
+     */
+    private void initMap() {
+        for (int i = 0; classes[i] != null; i++) {
+            winPerClass.put(classes[i], 0);
+        }
+    }
+
+    /**
      * Called when Statistics is instantiated, retrieves general statistics.
      */
     public Statistics(Context ctx, FragmentActivity fragmentActivity) {
+        initMap();
         InternalFilesManager.DeckListFileManager DLFM =
                 new InternalFilesManager(ctx, fragmentActivity).new DeckListFileManager();
 
@@ -284,6 +299,10 @@ public class Statistics {
 
     public String getFavoriteDeckClass() {
         return favoriteDeckClass;
+    }
+
+    public HashMap<String, Integer> getWinPerClass() {
+        return winPerClass;
     }
 }
 
