@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.kade_c.hearth.fragments.About;
 import com.kade_c.hearth.fragments.CardDisplayer;
@@ -216,5 +217,28 @@ public class MainActivity extends AppCompatActivity
                 DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
         drawer.setDrawerLockMode(lockMode);
         toggle.setDrawerIndicatorEnabled(enabled);
+    }
+
+    /**
+     * Is called in Fragments that should hide the button to access the Nav. Drawer.
+     */
+    public void setDrawerState(boolean isEnabled) {
+        if (isEnabled) {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            toggle.setDrawerIndicatorEnabled(true);
+            toggle.syncState();
+
+        }
+        else {
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            toggle.setDrawerIndicatorEnabled(false);
+            toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSupportNavigateUp();
+                }
+            });
+            toggle.syncState();
+        }
     }
 }
