@@ -15,7 +15,7 @@ import com.kade_c.hearth.R;
  * Handles the class selection on deck creation.
  * Displays class icons and lets the user click on the one that is appropriate.
  */
-public class DeckCreationClassSelector extends Fragment {
+public class DeckCreationClass extends Fragment {
 
     View view;
 

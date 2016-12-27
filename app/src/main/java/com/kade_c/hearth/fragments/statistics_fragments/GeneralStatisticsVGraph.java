@@ -14,7 +14,6 @@ import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-import com.kade_c.hearth.InternalFilesManager;
 import com.kade_c.hearth.R;
 import com.kade_c.hearth.Statistics;
 
@@ -23,7 +22,7 @@ import java.util.HashMap;
 /**
  * Sets up and displays our victory graphs.
  */
-public class GeneralStatisticsGraph extends Fragment {
+public class GeneralStatisticsVGraph extends Fragment {
 
     View view;
 
@@ -33,10 +32,11 @@ public class GeneralStatisticsGraph extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.statistics_general_graph, container, false);
+        view =  inflater.inflate(R.layout.statistics_general_victory_graph, container, false);
 
         // Retrieve statistics.
         Statistics statistics = new Statistics(getContext(), getActivity());
+
         winPerClass = statistics.getWinPerClass();
 
         // Sets up our graphics.
