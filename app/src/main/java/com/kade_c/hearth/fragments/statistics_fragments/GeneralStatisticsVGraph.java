@@ -35,7 +35,7 @@ public class GeneralStatisticsVGraph extends Fragment {
         view =  inflater.inflate(R.layout.statistics_general_victory_graph, container, false);
 
         // Retrieve statistics.
-        Statistics statistics = new Statistics(getContext(), getActivity());
+        Statistics statistics = new Statistics(getContext(), getActivity(), true);
 
         winPerClass = statistics.getWinPerClass();
 
