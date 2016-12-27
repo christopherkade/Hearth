@@ -43,20 +43,20 @@ public class DeckStatistics extends Fragment {
     private boolean deletion = false;
 
     // Our Internal File Manager that handles reading and writing in our Internal files.
-    private InternalFilesManager.DeckListFileManager DLFM;
+    private InternalFilesManager IFM;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view =  inflater.inflate(R.layout.statistics_deck, container, false);
 
-        DLFM = new InternalFilesManager(getContext(), getActivity()). new DeckListFileManager();
+        IFM = new InternalFilesManager(getContext(), getActivity());
 
         // Sets the Drawer as enabled.
         ((MainActivity) getActivity()).setDrawerEnabled(true);
 
         // Gets decks from file.
-        lines = DLFM.getDecksFromFile();
+        lines = IFM.getDecksFromFile();
 
         // Refresh deck list.
         refreshDeckList();
@@ -64,7 +64,7 @@ public class DeckStatistics extends Fragment {
         // Handles if user clicks on a deck in the list.
         handleDeckPress();
 
-        // When the user presses the '+' (Deck creation) button, call the DeckCreationClassSelector Fragment.
+        // When the user presses the '+' (Deck creation) button, call the DeckCreationClass Fragment.
         Button createDeckButton = (Button) view.findViewById(R.id.newDeck_button);
         createDeckButton.setOnClickListener(new View.OnClickListener() {
 
@@ -74,7 +74,7 @@ public class DeckStatistics extends Fragment {
              */
             @Override
             public void onClick(View v) {
-                final Fragment homeFragment = new DeckCreationClassSelector();
+                final Fragment homeFragment = new DeckCreationClass();
                 ((MainActivity)getActivity()).addFragment(homeFragment);
             }
         });
@@ -135,7 +135,7 @@ public class DeckStatistics extends Fragment {
                 if (deletion) {
                     deletion = false;
                     String fileToDelete = deckClasses[position] + " | " + deckNames[position];
-                    lines = DLFM.deleteDeckFromList(fileToDelete, position);
+                    lines = IFM.deleteDeckFromList(fileToDelete, position);
                     refreshDeckList();
                 } else {
                     openDeckStatsFragment(deckNames[position], deckClasses[position]);

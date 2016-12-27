@@ -35,14 +35,14 @@ public class AddGame extends Fragment {
     private String wonAgainst;
 
     // Our internal file manager that writes in our deck files.
-    private InternalFilesManager.DeckFileManager DFM;
+    private InternalFilesManager IFM;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view =  inflater.inflate(R.layout.add_game, container, false);
 
-        DFM = new InternalFilesManager(getContext(), getActivity()). new DeckFileManager();
+        IFM = new InternalFilesManager(getContext(), getActivity());
 
         ((MainActivity) getActivity()).setDrawerEnabled(false);
 
@@ -80,7 +80,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Mage";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -90,7 +90,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Hunter";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -100,7 +100,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Paladin";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -110,7 +110,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Warrior";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -120,7 +120,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Druid";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -130,7 +130,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Warlock";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -140,7 +140,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Shaman";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -150,7 +150,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Priest";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });
@@ -160,7 +160,7 @@ public class AddGame extends Fragment {
             @Override
             public void onClick(View v) {
                 wonAgainst = "Rogue";
-                DFM.writeInStatFile(deckClass, deckName, type, wonAgainst);
+                IFM.writeStatisticsFile(deckClass, deckName, type, wonAgainst);
                 callLastFragment();
             }
         });

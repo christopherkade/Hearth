@@ -39,7 +39,7 @@ public class DeckSelectedStatistics extends Fragment {
 
     // Our Internal file manager that handles the reading and writing of
     // internal statistics files.
-    private InternalFilesManager.DeckFileManager DFM;
+    private InternalFilesManager IFM;
 
     private Integer totalGame = 0;
     private Integer numVictories = 0;
@@ -56,7 +56,10 @@ public class DeckSelectedStatistics extends Fragment {
 
         view =  inflater.inflate(R.layout.statistics_deck_selected, container, false);
 
-        DFM = new InternalFilesManager(getContext(), getActivity()). new DeckFileManager();
+        IFM = new InternalFilesManager(getContext(), getActivity());
+
+        // Hides the nav. drawer button.
+//        ((MainActivity) getActivity()).setDrawerState(false);
 
         // Sets the Drawer as enabled.
         ((MainActivity) getActivity()).setDrawerEnabled(true);
@@ -72,7 +75,7 @@ public class DeckSelectedStatistics extends Fragment {
         setDeckNameAndIcon();
 
         // Opens deck file and reads its information.
-        lines = DFM.getDeckFileInformation(deckClass, deckName);
+        lines = IFM.getDeckStatistics(deckClass, deckName);
 
         // Calculates stats with information from file and displays them.
         calculateStats();

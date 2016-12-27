@@ -1,6 +1,5 @@
 package com.kade_c.hearth.fragments.statistics_fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,9 +15,6 @@ import com.kade_c.hearth.InternalFilesManager;
 import com.kade_c.hearth.MainActivity;
 import com.kade_c.hearth.R;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 /**
  * Handles the name inputting on deck creation.
  * Lets the user input a name for their deck and creates deck file.
@@ -33,10 +29,14 @@ public class DeckCreationName extends Fragment {
     // Class selected in the previous Fragment.
     private String classSelected;
 
+    private InternalFilesManager IFM;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.deck_creation_name, container, false);
         classSelected = getArguments().getString("classSelected");
+
+        IFM = new InternalFilesManager(getContext(), getActivity());
 
         setClassImage();
 
@@ -56,7 +56,7 @@ public class DeckCreationName extends Fragment {
 
                 // If input is valid, create deck.
                 if (checkInput()) {
-                    createDeck();
+                    IFM.createDeckFile(classSelected, name);
                     callDeckFragment();
                 }
             }
@@ -82,10 +82,8 @@ public class DeckCreationName extends Fragment {
                     .show();
             return false;
         } else {
-            InternalFilesManager.DeckListFileManager DLFM = new InternalFilesManager(getContext(), getActivity()).new DeckListFileManager();
-
             // Checks if duplicate.
-            if (DLFM.checkDuplicateName(name)) {
+            if (IFM.checkDuplicateDeckName(name)) {
                 Toast.makeText(getContext().getApplicationContext(),
                         "Name taken", Toast.LENGTH_LONG)
                         .show();
@@ -113,26 +111,6 @@ public class DeckCreationName extends Fragment {
 
         int resourceId = getActivity().getResources().getIdentifier(classMin, "mipmap", getActivity().getPackageName());
         img.setImageResource(resourceId);
-    }
-
-    /**
-     * Create file containing the newly created deck
-     * Adds a "class | deck_name" line in our deck info file.
-     */
-    private void createDeck() {
-        String deckInfo = classSelected + " | " + name;
-
-        try {
-            // Name of the file containing our deck list.
-            String FILENAME = "Deck_Info";
-
-            FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_APPEND);
-            fos.write(deckInfo.getBytes());
-            fos.write('\n');
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
