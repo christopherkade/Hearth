@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import java.util.List;
 /**
  * Handles the Slide View for our General Statistics page.
  */
+// TODO: Solve title cut in half problem with ViewPager.
 public class GeneralStatisticsVP extends Fragment {
 
     View view;
@@ -40,10 +40,10 @@ public class GeneralStatisticsVP extends Fragment {
      * Creates and sets our slides in our ViewPager.
      */
     private void createViewPager(ViewPager viewPager) {
-        Log.d("activity", "viewpager");
         mStatisticsPagerAdapter = new StatisticsPagerAdapter(getActivity().getSupportFragmentManager());
         mStatisticsPagerAdapter.addFrag(new GeneralStatistics(), "GeneralStatistics");
-        mStatisticsPagerAdapter.addFrag(new GeneralStatisticsGraph(), "GeneralStatisticsGraph");
+        mStatisticsPagerAdapter.addFrag(new GeneralStatisticsVGraph(), "GeneralStatisticsVGraph");
+        mStatisticsPagerAdapter.addFrag(new GeneralStatisticsDGraph(), "GeneralStatisticsDGraph");
 
         viewPager.setAdapter(mStatisticsPagerAdapter);
     }
