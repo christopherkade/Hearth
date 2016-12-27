@@ -19,10 +19,6 @@ public class Statistics {
     private int totalVictories = 0;
     private int totalDefeats = 0;
 
-    private int gamesPlayed = 0;
-    private int gamesWon = 0;
-    private int gamesLost = 0;
-
     private Float percentageWin = 0f;
     private int activeDecksNumber = 0;
 
@@ -34,8 +30,8 @@ public class Statistics {
     private HashMap<String, Integer> winPerClass = new HashMap<>();
     private HashMap<String, Integer> lossPerClass = new HashMap<>();
 
-    private String favoriteDeck = "None";
-    private String favoriteDeckClass = "";
+    private String mostPlayedDeck = "None";
+    private String mostPlayedDeckClass = "";
 
     private String mostSuccessDeck = "None";
     private String mostSuccessDeckClass = "";
@@ -114,13 +110,13 @@ public class Statistics {
     }
 
     /**
-     * Sets the players favorite deck (most played).
+     * Sets the players most played deck.
      */
-    private void determineFavoriteDeck(String deckName, int gamesPlayed, int lastDeckGamesPlayed) {
-        if (gamesPlayed > lastDeckGamesPlayed) {
+    private void determineMostPlayedDeck(String deckName, int gamesPlayed, int mostPlayedDeckGames) {
+        if (gamesPlayed > mostPlayedDeckGames) {
             String[] favDeckSplit = deckName.split(" \\| ");
-            favoriteDeckClass = favDeckSplit[0];
-            favoriteDeck = favDeckSplit[1].replace("\n", "");
+            mostPlayedDeckClass = favDeckSplit[0];
+            mostPlayedDeck = favDeckSplit[1].replace("\n", "");
         }
     }
 
@@ -140,13 +136,16 @@ public class Statistics {
      */
     private void saveStatValues() {
         this.calculateVictoryPercentage(totalGames, totalVictories);
-        this.setGamesPlayed(totalGames);
-        this.setGamesWon(totalVictories);
-        this.setGamesLost(totalDefeats);
+
+        this.setTotalGames(totalGames);
+        this.setTotalVictories(totalVictories);
+        this.setTotalDefeats(totalDefeats);
+
         this.setActiveDecksNumber(deckList.size());
-        this.setFavoriteDeck(favoriteDeck);
+
+        this.setMostPlayedDeck(mostPlayedDeck);
         this.setMostSuccessfulDeck(mostSuccessDeck);
-        this.setFavoriteDeckClass(favoriteDeckClass);
+        this.setMostPlayedDeckClass(mostPlayedDeckClass);
         this.setMostSuccessDeckClass(mostSuccessDeckClass);
     }
 
@@ -160,10 +159,55 @@ public class Statistics {
         }
     }
 
+    // Constructor for Victory / Defeat Graphs
+
+    /**
+     * Constructor for Victory and Defeat Graphs statistics.
+     */
+    public Statistics(Context ctx, FragmentActivity fragmentActivity, boolean isVictory) {
+        InternalFilesManager IFM = new InternalFilesManager(ctx, fragmentActivity);
+
+        // Initialize our victory / defeat HashMap.
+        initMap();
+
+        deckList = IFM.getDecksFromFile();
+
+        if (deckList.size() != 0) {
+            List<List<String>> games = new ArrayList<>();
+
+            // For every deck in our Deck List
+            for (String deck : deckList) {
+                List<String> gameList = IFM.readStatisticsFile(deck);
+                games.add(gameList);
+            }
+
+            // For every games list in our List of games list.
+            for (List<String> gamesList : games) {
+                // If no games for deck, continue.
+                if (gamesList.size() == 0) continue;
+                // Class of the current deck being analysed.
+                String deckClass = gamesList.get(0).split(" \\| ")[0].trim();
+
+                // For every game in our games list.
+                for (int i = 1; i < gamesList.size(); i++) {
+                    String line = gamesList.get(i);
+
+                    // Register victory or defeat.
+                    if (line.charAt(0) == 'V') {
+                        if (isVictory)
+                            this.setClassSpecificVictory(deckClass);
+                    } else if (line.charAt(0) == 'D') {
+                        if (!isVictory)
+                            this.setClassSpecificDefeat(deckClass);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Called when Statistics is instantiated, retrieves general statistics.
      */
-    // TODO: Try not to re-calculate Statistics twice if no changes found.
     public Statistics(Context ctx, FragmentActivity fragmentActivity) {
         InternalFilesManager IFM = new InternalFilesManager(ctx, fragmentActivity);
 
@@ -178,79 +222,79 @@ public class Statistics {
             List<List<String>> games = new ArrayList<>();
 
             // Get each deck's stat list one by one and save them.
+            int gamesPlayed;
+            int mostPlayedDeckGames = 0;
+            int counter = 0;
+
+            // For every deck in our Deck List
             for (String deck : deckList) {
-                games.add(IFM.readStatisticsFile(deck));
+                List<String> gameList = IFM.readStatisticsFile(deck);
+                games.add(gameList);
+
+                // Determines players most played deck.
+                gamesPlayed = gameList.size() - 1;
+
+                determineMostPlayedDeck(deckList.get(counter), gamesPlayed, mostPlayedDeckGames);
+                if (gamesPlayed > mostPlayedDeckGames)
+                    mostPlayedDeckGames = gamesPlayed;
+                counter++;
             }
 
-            int lastDeckGamesPlayed = 0;
+            // Determines players most successful deck.
             int lastDeckVictories = 0;
 
-            if (games.size() != 0) {
-                // Goes through every deck.
-                for (List<String> deck : games) {
-                    if (deck.size() != 0) {
-                        // Class of the current deck being analysed.
-                        String deckClass = deck.get(0).split(" \\| ")[0].trim();
-                        int gamesPlayed = 0;
-                        int deckVictories = 0;
+            // For every games list in our List of games list.
+            for (List<String> gamesList : games) {
+                // If no games for deck, continue.
+                if (gamesList.size() == 0) continue;
+                // Class of the current deck being analysed.
+                String deckClass = gamesList.get(0).split(" \\| ")[0].trim();
+                int deckVictories = 0;
 
-                        // Goes through every line of every deck stat file.
-                        for (int i = 1; i < deck.size(); i++) {
-                            String line = deck.get(i);
-                            String opponentClass = line.split(" ")[1];
+                // For every game in our games list.
+                for (int i = 1; i < gamesList.size(); i++) {
+                    String line = gamesList.get(i);
+                    String opponentClass = line.split(" ")[1].replace("\n", "");
 
-                            // Register victory or defeat.
-                            if (line.charAt(0) == 'V') {
-                                deckVictories++;
-                                totalVictories++;
-                                this.setWinAgainstClass(opponentClass);
-                                this.setClassSpecificVictory(deckClass);
-                            } else if (line.charAt(0) == 'D') {
-                                totalDefeats++;
-                                this.setLossAgainstClass(opponentClass);
-                                this.setClassSpecificDefeat(deckClass);
-                            }
-                            gamesPlayed++;
-                        }
-                        determineSuccessfulDeck(deck.get(0), deckVictories, lastDeckVictories);
-                        determineFavoriteDeck(deck.get(0), gamesPlayed, lastDeckGamesPlayed);
-
-                        lastDeckVictories = deckVictories;
-                        lastDeckGamesPlayed = gamesPlayed;
+                    // Register victory or defeat.
+                    if (line.charAt(0) == 'V') {
+                        deckVictories++;
+                        totalVictories++;
+                        this.setWinAgainstClass(opponentClass);
+                        this.setClassSpecificVictory(deckClass);
+                    } else if (line.charAt(0) == 'D') {
+                        totalDefeats++;
+                        this.setLossAgainstClass(opponentClass);
+                        this.setClassSpecificDefeat(deckClass);
                     }
                 }
-                if (favoriteDeck == null) {
-                    favoriteDeck = "None";
+                determineSuccessfulDeck(gamesList.get(0), deckVictories, lastDeckVictories);
+                if (deckVictories > lastDeckVictories)
+                    lastDeckVictories = deckVictories;
+
+                if (mostPlayedDeck == null) {
+                    mostPlayedDeck = "None";
                 }
                 if (mostSuccessDeck == null) {
                     mostSuccessDeck = "None";
                 }
-                totalGames = totalVictories + totalDefeats;
-
-                saveStatValues();
             }
+            totalGames = totalVictories + totalDefeats;
+
+            saveStatValues();
         }
     }
 
     // SETTERS
-    private void setGamesPlayed(int gamesPlayed) {
-        this.gamesPlayed = gamesPlayed;
+    private void setTotalGames(int gamesPlayed) {
+        this.totalGames = gamesPlayed;
     }
-
-    private void setGamesWon(int gamesWon) {
-        this.gamesWon = gamesWon;
-    }
-
-    private void setGamesLost(int gamesLost) {
-        this.gamesLost = gamesLost;
-    }
-
     private void setActiveDecksNumber(int activeDecksNumber) {
         this.activeDecksNumber = activeDecksNumber;
     }
 
-    private void setFavoriteDeck(String favoriteDeck) {
-        this.favoriteDeck = favoriteDeck;
+    private void setMostPlayedDeck(String mostPlayedDeck) {
+        this.mostPlayedDeck = mostPlayedDeck;
     }
 
     private void setMostSuccessfulDeck(String mostSuccessfulDeck) {
@@ -261,23 +305,19 @@ public class Statistics {
         this.mostSuccessDeckClass = mostSuccessDeckClass;
     }
 
-    private void setFavoriteDeckClass(String favoriteDeckClass) {
-        this.favoriteDeckClass = favoriteDeckClass;
+    private void setMostPlayedDeckClass(String mostPlayedDeckClass) {
+        this.mostPlayedDeckClass = mostPlayedDeckClass;
+    }
+
+    private void setTotalDefeats(int totalDefeats) {
+        this.totalDefeats = totalDefeats;
+    }
+
+    private void setTotalVictories(int totalVictories) {
+        this.totalVictories = totalVictories;
     }
 
     // GETTERS
-    public int getGamesPlayed() {
-        return gamesPlayed;
-    }
-
-    public int getGamesWon() {
-        return gamesWon;
-    }
-
-    public int getGamesLost() {
-        return gamesLost;
-    }
-
     public Float getPercentageWin() {
         return percentageWin;
     }
@@ -286,8 +326,8 @@ public class Statistics {
         return activeDecksNumber;
     }
 
-    public String getFavoriteDeck() {
-        return favoriteDeck;
+    public String getMostPlayedDeck() {
+        return mostPlayedDeck;
     }
 
     public String getMostSuccessfulDeck() {
@@ -298,8 +338,8 @@ public class Statistics {
         return mostSuccessDeckClass;
     }
 
-    public String getFavoriteDeckClass() {
-        return favoriteDeckClass;
+    public String getMostPlayedDeckClass() {
+        return mostPlayedDeckClass;
     }
 
     public HashMap<String, Integer> getWinPerClass() {
@@ -308,6 +348,18 @@ public class Statistics {
 
     public HashMap<String, Integer> getLossPerClass() {
         return lossPerClass;
+    }
+
+    public int getTotalDefeats() {
+        return totalDefeats;
+    }
+
+    public int getTotalVictories() {
+        return totalVictories;
+    }
+
+    public int getTotalGames() {
+        return totalGames;
     }
 }
 

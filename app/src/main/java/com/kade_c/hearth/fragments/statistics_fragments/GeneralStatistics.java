@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kade_c.hearth.MainActivity;
 import com.kade_c.hearth.R;
 import com.kade_c.hearth.Statistics;
 
@@ -59,17 +58,17 @@ public class GeneralStatistics extends Fragment {
         ImageView successDeckIcon = (ImageView) view.findViewById(R.id.most_success_deck_icon);
 
         totalPercentageWin.setText(statistics.getPercentageWin().toString() + "%");
-        totalGames.setText(String.valueOf(statistics.getGamesPlayed()));
-        totalGamesWon.setText(String.valueOf(statistics.getGamesWon()));
-        totalGamesLost.setText(String.valueOf(statistics.getGamesLost()));
+        totalGames.setText(String.valueOf(statistics.getTotalGames()));
+        totalGamesWon.setText(String.valueOf(statistics.getTotalVictories()));
+        totalGamesLost.setText(String.valueOf(statistics.getTotalDefeats()));
         totalDecks.setText(String.valueOf(statistics.getActiveDecksNumber()));
-        favoriteDeck.setText(String.valueOf(statistics.getFavoriteDeck()));
+        favoriteDeck.setText(String.valueOf(statistics.getMostPlayedDeck()));
         successDeck.setText(String.valueOf(statistics.getMostSuccessfulDeck()));
 
-        String favDeck = statistics.getFavoriteDeck();
+        String favDeck = statistics.getMostPlayedDeck();
         String successfulDeck = statistics.getMostSuccessfulDeck();
         if (!favDeck.equals("")) {
-            int resourceIdFav = getActivity().getResources().getIdentifier(statistics.getFavoriteDeckClass().toLowerCase(), "mipmap", getActivity().getPackageName());
+            int resourceIdFav = getActivity().getResources().getIdentifier(statistics.getMostPlayedDeckClass().toLowerCase(), "mipmap", getActivity().getPackageName());
             favDeckIcon.setImageResource(resourceIdFav);
         }
         if (!successfulDeck.equals("")) {
