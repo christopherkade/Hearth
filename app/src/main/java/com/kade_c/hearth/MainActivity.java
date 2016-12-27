@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment HomeFragment;
 
+    boolean change;
+
     /**
      * Entry point to our application.
      * Checks is our user is connected and initializes our ConnectionHandler.
@@ -120,9 +122,6 @@ public class MainActivity extends AppCompatActivity
             // STATS GENERAL
             case R.id.nav_stat_general:
                 fragment = new GeneralStatisticsVP();
-//                fragment = new GeneralStatistics();
-//                startActivity(new Intent(this, GeneralStatisticsVP.class));
-//                fragment = null;
                 break;
             // STATS DECK
             case R.id.nav_stat_deck:
